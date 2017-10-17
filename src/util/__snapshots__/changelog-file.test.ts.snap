@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`addChange should add the change as a string if the detailed changelog entry only contains details 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - '** NEW CHANGE **'
+    - a feature
+  fix:
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
 exports[`addChange should create a new change type section if one does not exist 1`] = `
 unreleased:
   breaking:
@@ -20,6 +37,24 @@ exports[`addChange should create a new unreleased section if one does not exist 
 unreleased:
   feature:
     - '** NEW CHANGE **'
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should output a detailed changelog entry 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - details: '** NEW CHANGE **'
+      module: module
+    - a feature
+  fix:
+    - a fix
 0.1.0:
   metadata:
     date: '2017-01-01'

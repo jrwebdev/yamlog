@@ -6,6 +6,13 @@ const defaultVersionKeyOrder: Array<'metadata' | ChangeType> = [
   ...changeTypeKeys,
 ];
 
+export const processChange = (change: Change) =>
+  typeof change !== 'string' &&
+  Object.keys(change).length === 1 &&
+  change.details
+    ? change.details
+    : change;
+
 const sortVersionChangeTypeEntries = (version: ChangelogVersion) =>
   defaultVersionKeyOrder.reduce(
     (acc, key) => (version[key] ? { ...acc, [key]: version[key] } : acc),
@@ -28,7 +35,7 @@ export const addChangeToVersionChangeType = (
   type: ChangeType,
   change: Change,
   version: ChangelogVersion
-): Change[] => [change, ...(version[type] || [])];
+): Change[] => [processChange(change), ...(version[type] || [])];
 
 export const updateVersionChangeTypeEntries = (
   version: ChangelogVersion = {},

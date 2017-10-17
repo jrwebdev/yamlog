@@ -92,4 +92,17 @@ describe('addChange', () => {
     await addChange('fix', '** NEW CHANGE **');
     expect(getOutput()).toMatchSnapshot();
   });
+
+  it('should output a detailed changelog entry', async () => {
+    await addChange('feature', {
+      details: '** NEW CHANGE **',
+      module: 'module',
+    });
+    expect(getOutput()).toMatchSnapshot();
+  });
+
+  it('should add the change as a string if the detailed changelog entry only contains details', async () => {
+    await addChange('feature', { details: '** NEW CHANGE **' });
+    expect(getOutput()).toMatchSnapshot();
+  });
 });
