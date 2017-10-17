@@ -1,0 +1,21 @@
+
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/",
+    "strict": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "alwaysStrict": false,
+    "noImplicitUseStrict": true,
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "lib": ["es2015", "es2016", "es2017"]
+  }
+}

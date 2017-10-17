@@ -1,0 +1,24 @@
+{
+  "name": "yamlog",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:jrwebdev/yamlog.git",
+  "author": "jrwebdev <web@jravenscroft.co.uk>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/fs-extra": "^4.0.2",
+    "@types/js-yaml": "^3.9.1",
+    "@types/node": "^8.0.41",
+    "@types/yargs": "^8.0.2",
+    "jest": "^21.2.1",
+    "prettier": "^1.7.4",
+    "ts-jest": "^21.1.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "fs-extra": "^4.0.2",
+    "js-yaml": "^3.10.0",
+    "yargs": "^9.0.1"
+  }
+}
