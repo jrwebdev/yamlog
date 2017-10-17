@@ -5,11 +5,16 @@ export interface ChangelogVersionMetadata {
   date: string;
 }
 
-export interface ChangelogVersion {
+type ChangelogVersionChanges = { [type in ChangeType]?: Change[] };
+
+// interface ChangelogVersionChanges {
+//   breaking?: Change[];
+//   feature?: Change[];
+//   fix?: Change[];
+// }
+
+export interface ChangelogVersion extends ChangelogVersionChanges {
   metadata?: ChangelogVersionMetadata;
-  breaking?: Change[];
-  feature?: Change[];
-  fix?: Change[];
 }
 
 export interface Changelog {

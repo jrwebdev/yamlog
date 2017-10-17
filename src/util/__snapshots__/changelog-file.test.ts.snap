@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addChange should create a new change type section if one does not exist 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - '** NEW CHANGE **'
+  fix:
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should create a new unreleased section if one does not exist 1`] = `
+unreleased:
+  feature:
+    - '** NEW CHANGE **'
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should reorganise the change types if they are out of order 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - a feature
+  fix:
+    - '** NEW CHANGE **'
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should strip out any empty sections 1`] = `
+unreleased:
+  fix:
+    - '** NEW CHANGE **'
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should write a change to the start of the breaking section 1`] = `
+unreleased:
+  breaking:
+    - '** NEW CHANGE **'
+    - a breaking change
+  feature:
+    - a feature
+  fix:
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should write a change to the start of the feature section 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - '** NEW CHANGE **'
+    - a feature
+  fix:
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
+
+exports[`addChange should write a change to the start of the fix section 1`] = `
+unreleased:
+  breaking:
+    - a breaking change
+  feature:
+    - a feature
+  fix:
+    - '** NEW CHANGE **'
+    - a fix
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - a feature
+
+`;
