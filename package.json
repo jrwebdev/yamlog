@@ -5,6 +5,9 @@
   "repository": "git@github.com:jrwebdev/yamlog.git",
   "author": "jrwebdev <web@jravenscroft.co.uk>",
   "license": "MIT",
+  "yamlog": {
+    "unreleasedDir": ".yamlog-unreleased"
+  },
   "scripts": {
     "test": "jest --watch"
   },
@@ -13,6 +16,7 @@
     "@types/inquirer": "^0.0.35",
     "@types/jest": "^21.1.3",
     "@types/js-yaml": "^3.9.1",
+    "@types/moment": "^2.13.0",
     "@types/node": "^8.0.41",
     "@types/yargs": "^8.0.2",
     "jest": "^21.2.1",
@@ -25,6 +29,7 @@
     "fs-extra": "^4.0.2",
     "inquirer": "^3.3.0",
     "js-yaml": "^3.10.0",
+    "moment": "^2.19.1",
     "yargs": "^9.0.1"
   }
 }

@@ -23,6 +23,12 @@
   version "3.9.1"
   resolved "http://localhost:8081/repository/jrweb/@types/js-yaml/-/js-yaml-3.9.1.tgz#2f3c142771bb345829ce690c5838760b6b9ba553"
 
+"@types/moment@^2.13.0":
+  version "2.13.0"
+  resolved "http://localhost:8081/repository/jrweb/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
+  dependencies:
+    moment "*"
+
 "@types/node@*", "@types/node@^8.0.41":
   version "8.0.41"
   resolved "http://localhost:8081/repository/jrweb/@types/node/-/node-8.0.41.tgz#b88d23b454fdbcfd170f61de88a33ec9cd98960a"
@@ -1820,6 +1826,10 @@ minimist@~0.0.1:
   resolved "http://localhost:8081/repository/jrweb/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@*, moment@^2.19.1:
+  version "2.19.1"
+  resolved "http://localhost:8081/repository/jrweb/moment/-/moment-2.19.1.tgz#56da1a2d1cbf01d38b7e1afc31c10bcfa1929167"
 
 ms@2.0.0:
   version "2.0.0"
