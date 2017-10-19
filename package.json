@@ -5,7 +5,9 @@
   "repository": "git@github.com:jrwebdev/yamlog.git",
   "author": "jrwebdev <web@jravenscroft.co.uk>",
   "license": "MIT",
-  "yamlog": {},
+  "yamlog": {
+    "unstable": true
+  },
   "scripts": {
     "test": "jest --watch"
   },
