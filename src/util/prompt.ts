@@ -26,6 +26,7 @@ const prompt = ({ defaultMessage = '', defaultModule = '' } = {}) => {
       name: 'details',
       message: 'Change details',
       default: defaultMessage || undefined,
+      validate: input => (!input.trim() ? 'details must be entered' : true),
     },
     {
       type: 'confirm',
