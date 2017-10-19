@@ -33,6 +33,10 @@
   version "8.0.41"
   resolved "http://localhost:8081/repository/jrweb/@types/node/-/node-8.0.41.tgz#b88d23b454fdbcfd170f61de88a33ec9cd98960a"
 
+"@types/ramda@^0.24.17":
+  version "0.24.17"
+  resolved "http://localhost:8081/repository/jrweb/@types/ramda/-/ramda-0.24.17.tgz#9a399c69d102588dea1c6817e4401e8fa780e40b"
+
 "@types/rx-core-binding@*":
   version "4.0.4"
   resolved "http://localhost:8081/repository/jrweb/@types/rx-core-binding/-/rx-core-binding-4.0.4.tgz#d969d32f15a62b89e2862c17b3ee78fe329818d3"
@@ -2143,6 +2147,10 @@ qs@~6.4.0:
 qs@~6.5.1:
   version "6.5.1"
   resolved "http://localhost:8081/repository/jrweb/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "http://localhost:8081/repository/jrweb/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
 
 randomatic@^1.1.3:
   version "1.1.7"

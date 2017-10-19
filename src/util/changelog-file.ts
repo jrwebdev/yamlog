@@ -9,12 +9,13 @@ import {
 
 const changelogFile = 'changelog.yaml';
 
-const read = async () =>
+export const read = async () =>
   existsSync(changelogFile)
     ? (await readYamlFile(changelogFile)) as Changelog
     : {};
 
-const write = (changelog: Changelog) => writeYamlFile(changelogFile, changelog);
+export const write = (changelog: Changelog) =>
+  writeYamlFile(changelogFile, changelog);
 
 export const addChange = async (type: ChangeType, change: Change) => {
   const { unreleased = {}, ...released } = await read();
