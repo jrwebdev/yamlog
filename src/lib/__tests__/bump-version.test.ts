@@ -13,6 +13,7 @@ const setupTestProject = async (name: string) => {
     'mock-projects',
     `.${name}-backup`
   );
+  process.cwd = jest.fn(() => projectDir);
   await copy(projectDir, projectBackupDir);
 };
 
@@ -30,8 +31,8 @@ beforeEach(() => {
   expect.hasAssertions();
 });
 
-afterEach(() => {
-  restoreProjectDir();
+afterEach(async () => {
+  await restoreProjectDir();
 });
 
 it('should bump a stable version', async () => {
