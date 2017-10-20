@@ -7,7 +7,7 @@ import Config from '../../src/types/config';
 import { Changelog } from '../../src/types/changelog';
 
 const createMockProject = () => {
-  const setup = async (
+  const setup = (
     changelog?: Changelog,
     _config?: Config,
     _changeFiles?: string[]

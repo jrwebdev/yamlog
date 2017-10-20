@@ -2,6 +2,8 @@
 
 exports[`should add a breaking change 1`] = `
 unreleased:
+  breaking:
+    - Breaking Change 1
   feature:
     - Feature 1
   fix:
@@ -18,6 +20,8 @@ exports[`should add a change to an existing unreleased section 1`] = `
 unreleased:
   feature:
     - Feature 1
+  fix:
+    - Fix 1
 1.0.0:
   metadata:
     date: '2017-01-01'
@@ -28,6 +32,8 @@ unreleased:
 
 exports[`should add a feature 1`] = `
 unreleased:
+  feature:
+    - Feature 1
   fix:
     - Fix 1
 1.0.0:
@@ -41,6 +47,7 @@ unreleased:
 exports[`should add a fix 1`] = `
 unreleased:
   fix:
+    - Fix 2
     - Fix 1
 1.0.0:
   metadata:
@@ -58,6 +65,9 @@ unreleased:
 `;
 
 exports[`should create a new unreleased section and add a change 1`] = `
+unreleased:
+  fix:
+    - Fix 1
 1.0.0:
   metadata:
     date: '2017-01-01'

@@ -17,7 +17,7 @@ afterEach(async () => {
 
 it('should create a new changelog.yaml file and add a change', async () => {
   mockProject.setup();
-  log('fix', 'Fix 1');
+  await log('fix', 'Fix 1');
 });
 
 it('should create a new unreleased section and add a change', async () => {
@@ -27,8 +27,7 @@ it('should create a new unreleased section and add a change', async () => {
       feature: ['Feature 1'],
     },
   });
-  // TODO: Fix failing test
-  log('fix', 'Fix 1');
+  await log('fix', 'Fix 1');
 });
 
 it('should add a change to an existing unreleased section', async () => {
@@ -41,8 +40,7 @@ it('should add a change to an existing unreleased section', async () => {
       feature: ['Feature 1'],
     },
   });
-  // TODO: Fix failing test
-  log('fix', 'Fix 1');
+  await log('fix', 'Fix 1');
 });
 
 it('should add a fix', async () => {
@@ -55,8 +53,7 @@ it('should add a fix', async () => {
       feature: ['Feature 1'],
     },
   });
-  // TODO: Fix failing test
-  log('fix', 'Fix 2');
+  await log('fix', 'Fix 2');
 });
 
 it('should add a feature', async () => {
@@ -69,8 +66,7 @@ it('should add a feature', async () => {
       feature: ['Feature 1'],
     },
   });
-  // TODO: Fix failing test
-  log('feature', 'Feature 1');
+  await log('feature', 'Feature 1');
 });
 
 it('should add a breaking change', async () => {
@@ -84,6 +80,5 @@ it('should add a breaking change', async () => {
       feature: ['Feature 1'],
     },
   });
-  // TODO: Fix failing test
-  log('breaking', 'Breaking Change 1');
+  await log('breaking', 'Breaking Change 1');
 });
