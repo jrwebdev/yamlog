@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import { ChangelogConfig } from '../types/config';
 import { ChangeType, Change } from '../types/changelog';
 import {
@@ -22,10 +24,6 @@ export const addChange = (
     : addChangelogChange(changeType, change);
 
 export const bumpVersion = async (config: ChangelogConfig = {}) => {
-  let newVersion;
-  // let unreleased: ChangelogVersion;
-
-  // TODO: Read from change files
   const {
     unreleased: changelogUnreleased,
     ...released,
@@ -38,10 +36,15 @@ export const bumpVersion = async (config: ChangelogConfig = {}) => {
 
   if (Object.keys(unreleased).length) {
     const currentVersion = getCurrentVersion(released);
-    newVersion = getNextVersion(unreleased, currentVersion, config);
+    const newVersion = getNextVersion(unreleased, currentVersion, config);
     if (newVersion) {
       await writeChangelog({
-        [newVersion]: unreleased,
+        [newVersion]: {
+          metadata: {
+            date: moment().format('YYYY-MM-DD'),
+          },
+          ...unreleased,
+        },
         ...released,
       });
 
@@ -51,5 +54,5 @@ export const bumpVersion = async (config: ChangelogConfig = {}) => {
     }
   }
 
-  return newVersion;
+  return undefined;
 };

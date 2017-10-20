@@ -6,8 +6,7 @@
   "author": "jrwebdev <web@jravenscroft.co.uk>",
   "license": "MIT",
   "yamlog": {
-    "unstable": true,
-    "unreleasedDir": true
+    "unstable": true
   },
   "scripts": {
     "test": "jest --watch"

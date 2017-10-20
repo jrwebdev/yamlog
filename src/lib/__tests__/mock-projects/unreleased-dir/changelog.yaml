@@ -1,0 +1,7 @@
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
