@@ -3,7 +3,7 @@ import { createMockProject } from './utils';
 let mockProject: any;
 
 beforeEach(() => {
-  mockProject = createMockProject('utils');
+  mockProject = createMockProject();
   expect.hasAssertions();
 });
 

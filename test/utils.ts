@@ -1,32 +1,33 @@
-import * as path from 'path';
+import * as mockFs from 'mock-fs';
 import * as fs from 'fs-extra';
 import * as yaml from 'js-yaml';
 
 import Config from '../src/types/config';
 import { Changelog } from '../src/types/changelog';
 
-// TODO: Use uuid for project dir?
-export const createMockProject = (dir: string) => {
-  // TODO: Find way to read from memory rather than writing to disk
-  const projectDir = path.resolve(__dirname, `.mock-project-${dir}`);
-  const changelogFile = path.resolve(projectDir, 'changelog.yaml');
+export const getMock = <T>(fn: (...args: any[]) => T) => fn as jest.Mock<T>;
 
+// TODO: Use uuid for project dir?
+export const createMockProject = () => {
   const setup = async (
     changelog: Changelog,
     _config?: Config,
     _changeFiles?: string[]
   ) => {
-    const changelogYaml = await yaml.safeDump(changelog);
-    await fs.ensureDir(projectDir);
-    await fs.writeFile(changelogFile, changelogYaml);
+    // TODO: no changelog.yaml
+    // TODO: Config
+    // TODO: Changelog
+    mockFs({
+      'changelog.yaml': yaml.safeDump(changelog),
+    });
   };
 
   const teardown = () => {
-    fs.remove(projectDir);
+    mockFs.restore();
   };
 
   const readChangelog = async () => {
-    const contents = await fs.readFile(changelogFile);
+    const contents = await fs.readFile('changelog.yaml');
     return contents.toString();
   };
 
