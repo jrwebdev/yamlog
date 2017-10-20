@@ -6,7 +6,7 @@ import {
   Change,
 } from '../types/changelog';
 import { VersionString } from '../types/version';
-import { sort, bumpMajor, bumpMinor, bumpPatch } from './version';
+import { sort, isUnstable, bumpMajor, bumpMinor, bumpPatch } from './version';
 
 const unstableBump = {
   startVersion: '0.1.0',
@@ -82,10 +82,15 @@ export const getNextVersion = (
   currentVersion?: VersionString,
   config: ChangelogConfig = {}
 ) => {
-  const bump = config.unstable ? unstableBump : stableBump;
+  const bump =
+    config.unstable && (!currentVersion || isUnstable(currentVersion))
+      ? unstableBump
+      : stableBump;
 
   if (!currentVersion) {
     return config.startVersion || bump.startVersion;
+  } else if (isUnstable(currentVersion) && !config.unstable) {
+    return stableBump.startVersion;
   } else if (unreleased.breaking && unreleased.breaking.length) {
     return bump.breaking(currentVersion);
   } else if (unreleased.feature && unreleased.feature.length) {

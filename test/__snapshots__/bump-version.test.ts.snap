@@ -96,6 +96,34 @@ exports[`should bump a patch version if there are unreleased fixes for an unstab
 
 `;
 
+exports[`should bump to v1 regardless of change type if an unstable project is now stable 1`] = `
+1.0.0:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should ignore the unstable option if the project is already at v1 1`] = `
+2.0.0:
+  metadata:
+    date: '2017-05-20'
+  breaking:
+    - Breaking Change 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
 exports[`should leave the changelog unchanged if there are no unreleased changes 1`] = `
 1.0.0:
   metadata:

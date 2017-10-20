@@ -109,6 +109,32 @@ it('should bump a minor version if there are unreleased fixes for an unstable pr
   await bumpVersion({ unstable: true });
 });
 
+it('should bump to v1 regardless of change type if an unstable project is now stable', async () => {
+  mockProject.setup({
+    unreleased: {
+      fix: ['Fix 1'],
+    },
+    '0.1.0': {
+      metadata: { date: '2017-01-01' },
+      feature: ['Feature 1'],
+    },
+  });
+  await bumpVersion();
+});
+
+it('should ignore the unstable option if the project is already at v1', async () => {
+  mockProject.setup({
+    unreleased: {
+      breaking: ['Breaking Change 1'],
+    },
+    '1.0.0': {
+      metadata: { date: '2017-01-01' },
+      feature: ['Feature 1'],
+    },
+  });
+  await bumpVersion({ unstable: true });
+});
+
 describe('unreleased directory', () => {
   it('should bump a patch version if there is a fix file in the unreleased directory', async () => {
     mockProject.setup(
