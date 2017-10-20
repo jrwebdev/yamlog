@@ -1,7 +1,5 @@
 const path = require('path');
 
-const yamlSerializer = path.resolve('config/yaml-serializer');
-
 module.exports = {
   roots: ['<rootDir>src', '<rootDir>test'],
   transform: {
@@ -10,7 +8,7 @@ module.exports = {
   transformIgnorePatterns: ['node_modules'],
   testRegex: '\\.test\\.(ts|tsx|js)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
-  snapshotSerializers: [yamlSerializer],
+  snapshotSerializers: ['<rootDir>test/value-serializer'],
   coverageDirectory: '<rootDir>build/coverage/',
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

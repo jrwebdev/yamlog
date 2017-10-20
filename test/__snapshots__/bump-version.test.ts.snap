@@ -1,52 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should bump a major version if there are unreleased breaking changes 1`] = `
-|
-  2.0.0:
-    metadata:
-      date: '2017-05-20'
-    breaking:
-      - Breaking Change 1
-    feature:
-      - Feature 1
-    fix:
-      - Fix 1
-  1.0.0:
-    metadata:
-      date: '2017-01-01'
-    feature:
-      - Feature 1
+2.0.0:
+  metadata:
+    date: '2017-05-20'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
 
 `;
 
 exports[`should bump a minor version if there are unreleased features 1`] = `
-|
-  1.1.0:
-    metadata:
-      date: '2017-05-20'
-    feature:
-      - Feature 1
-    fix:
-      - Fix 1
-  1.0.0:
-    metadata:
-      date: '2017-01-01'
-    feature:
-      - Feature 1
+1.1.0:
+  metadata:
+    date: '2017-05-20'
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should bump a minor version if there are unreleased fixes for an unstable project 1`] = `
+0.2.0:
+  metadata:
+    date: '2017-05-20'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should bump a patch version if there are unreleased features for an unstable project 1`] = `
+0.1.1:
+  metadata:
+    date: '2017-05-20'
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
 
 `;
 
 exports[`should bump a patch version if there are unreleased fixes 1`] = `
-|
-  1.0.1:
-    metadata:
-      date: '2017-05-20'
-    fix:
-      - Fix 1
-  1.0.0:
-    metadata:
-      date: '2017-01-01'
-    feature:
-      - Feature 1
+1.0.1:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should bump a patch version if there are unreleased fixes for an unstable project 1`] = `
+0.1.1:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should leave the changelog unchanged if there are no unreleased changes 1`] = `
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
 
 `;

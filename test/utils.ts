@@ -1,8 +1,8 @@
 import * as mockFs from 'mock-fs';
 import * as mockDate from 'mockdate';
 import * as fs from 'fs-extra';
-import * as yaml from 'js-yaml';
 
+import { format } from '../src/util/yaml';
 import Config from '../src/types/config';
 import { Changelog } from '../src/types/changelog';
 
@@ -16,9 +16,10 @@ export const createMockProject = () => {
     _changeFiles?: string[]
   ) => {
     mockDate.set('2017-05-20');
+
     const mockFiles: any = {};
     if (changelog) {
-      mockFiles['changelog.yaml'] = yaml.safeDump(changelog);
+      mockFiles['changelog.yaml'] = format(changelog);
     }
 
     // TODO: Config

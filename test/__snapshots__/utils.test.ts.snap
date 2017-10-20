@@ -1,11 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should write a changelog 1`] = `
-|
-  0.1.0:
-    metadata:
-      date: '2017-01-01'
-    feature:
-      - Feature 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
 
 `;
