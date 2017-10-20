@@ -7,8 +7,10 @@ beforeEach(() => {
   expect.hasAssertions();
 });
 
-afterEach(() => {
+afterEach(async () => {
+  const changelog = await mockProject.readChangelog();
   mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should write a changelog', async () => {
@@ -18,6 +20,4 @@ it('should write a changelog', async () => {
       feature: ['Feature 1'],
     },
   });
-  const changelog = await mockProject.readChangelog();
-  expect(changelog).toMatchSnapshot();
 });

@@ -9,8 +9,10 @@ beforeEach(() => {
   expect.hasAssertions();
 });
 
-afterEach(() => {
+afterEach(async () => {
+  const changelog = await mockProject.readChangelog();
   mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a patch version if there are unreleased fixes', async () => {
@@ -24,8 +26,6 @@ it('should bump a patch version if there are unreleased fixes', async () => {
     },
   });
   await bumpVersion();
-  const changelog = await mockProject.readChangelog();
-  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a minor version if there are unreleased features', async () => {
@@ -40,8 +40,6 @@ it('should bump a minor version if there are unreleased features', async () => {
     },
   });
   await bumpVersion();
-  const changelog = await mockProject.readChangelog();
-  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a major version if there are unreleased breaking changes', async () => {
@@ -57,6 +55,4 @@ it('should bump a major version if there are unreleased breaking changes', async
     },
   });
   await bumpVersion();
-  const changelog = await mockProject.readChangelog();
-  expect(changelog).toMatchSnapshot();
 });
