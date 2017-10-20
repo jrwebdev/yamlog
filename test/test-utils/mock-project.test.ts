@@ -1,4 +1,4 @@
-import { createMockProject } from './utils';
+import createMockProject from './mock-project';
 
 let mockProject: any;
 

@@ -2,14 +2,11 @@ import * as mockFs from 'mock-fs';
 import * as mockDate from 'mockdate';
 import * as fs from 'fs-extra';
 
-import { format } from '../src/util/yaml';
-import Config from '../src/types/config';
-import { Changelog } from '../src/types/changelog';
+import { format } from '../../src/util/yaml';
+import Config from '../../src/types/config';
+import { Changelog } from '../../src/types/changelog';
 
-export const getMock = <T>(fn: (...args: any[]) => T) => fn as jest.Mock<T>;
-
-// TODO: Use uuid for project dir?
-export const createMockProject = () => {
+const createMockProject = () => {
   const setup = async (
     changelog?: Changelog,
     _config?: Config,
@@ -43,3 +40,5 @@ export const createMockProject = () => {
     readChangelog,
   };
 };
+
+export default createMockProject;

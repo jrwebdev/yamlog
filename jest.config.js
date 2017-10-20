@@ -8,7 +8,7 @@ module.exports = {
   transformIgnorePatterns: ['node_modules'],
   testRegex: '\\.test\\.(ts|tsx|js)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
-  snapshotSerializers: ['<rootDir>test/value-serializer'],
+  snapshotSerializers: ['<rootDir>test/test-utils/serializers/value'],
   coverageDirectory: '<rootDir>build/coverage/',
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

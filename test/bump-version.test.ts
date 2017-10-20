@@ -1,4 +1,4 @@
-import { createMockProject } from './utils';
+import { createMockProject } from './test-utils';
 
 import bumpVersion from '../src/lib/bump-version';
 
