@@ -1,10 +1,14 @@
 import * as mockFs from 'mock-fs';
 import * as mockDate from 'mockdate';
+import * as cbGlob from 'glob';
+import * as pify from 'pify';
 import * as fs from 'fs-extra';
 
 import { format } from '../../src/util/yaml';
 import Config from '../../src/types/config';
 import { Changelog, ChangeType, Change } from '../../src/types/changelog';
+
+const glob = pify(cbGlob);
 
 const createMockProject = () => {
   const setup = (
@@ -12,7 +16,7 @@ const createMockProject = () => {
     changeFiles?: { [type in ChangeType]: Change[] },
     _config?: Config
   ) => {
-    mockDate.set('2017-05-20');
+    mockDate.set('2017-05-20 14:00');
 
     const mockFiles: any = {};
     if (changelog) {
@@ -23,11 +27,11 @@ const createMockProject = () => {
       let i = 0;
       Object.keys(changeFiles).forEach((type: ChangeType) => {
         changeFiles[type].forEach((change: Change) => {
-          mockFiles[
-            `.yamlog-unreleased/${type}-${(++i)
-              .toString()
-              .padStart(17, '0')}.yaml`
-          ] = format(change);
+          const filename = `.yamlog-unreleased/${type}-${(++i)
+            .toString()
+            .padStart(17, '0')}.yaml`;
+
+          mockFiles[filename] = format(change);
         });
       });
     }
@@ -46,10 +50,20 @@ const createMockProject = () => {
     return contents.toString();
   };
 
+  const readChangeFile = async () => {
+    const changeFiles = await glob('.yamlog-unreleased/*.*');
+    const contents = await fs.readFile(changeFiles[0]);
+    return {
+      filename: changeFiles[0],
+      contents: contents.toString(),
+    };
+  };
+
   return {
     setup,
     teardown,
     readChangelog,
+    readChangeFile,
   };
 };
 
