@@ -3,7 +3,7 @@ const path = require('path');
 const yamlSerializer = path.resolve('config/yaml-serializer');
 
 module.exports = {
-  roots: ['<rootDir>src'],
+  roots: ['<rootDir>src', '<rootDir>test'],
   transform: {
     '.tsx?$': 'ts-jest/preprocessor',
   },
