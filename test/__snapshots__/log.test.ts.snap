@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should add a breaking change 1`] = `
+unreleased:
+  feature:
+    - Feature 1
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should add a change to an existing unreleased section 1`] = `
+unreleased:
+  feature:
+    - Feature 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should add a feature 1`] = `
+unreleased:
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should add a fix 1`] = `
+unreleased:
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should create a new changelog.yaml file and add a change 1`] = `
+unreleased:
+  fix:
+    - Fix 1
+
+`;
+
+exports[`should create a new unreleased section and add a change 1`] = `
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;

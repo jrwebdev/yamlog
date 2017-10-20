@@ -5,7 +5,7 @@ import * as changelog from '../util/changelog';
 export default (
   changeType: ChangeType,
   change: Change,
-  config: ChangelogConfig
+  config: ChangelogConfig = {}
 ) =>
   changelog.addChange(changeType, change, {
     unreleasedDir: config.unreleasedDir || '',
