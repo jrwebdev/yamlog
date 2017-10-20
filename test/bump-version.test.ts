@@ -108,3 +108,56 @@ it('should bump a minor version if there are unreleased fixes for an unstable pr
   });
   await bumpVersion({ unstable: true });
 });
+
+describe('unreleased directory', () => {
+  it('should bump a patch version if there is a fix file in the unreleased directory', async () => {
+    mockProject.setup(
+      {
+        '1.0.0': {
+          metadata: { date: '2017-01-01' },
+          feature: ['Feature 1'],
+        },
+      },
+      {
+        breaking: [],
+        feature: [],
+        fix: ['Fix 1', 'Fix 2'],
+      }
+    );
+    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+  });
+
+  it('should bump a minor version if there is a feature file in the unreleased directory', async () => {
+    mockProject.setup(
+      {
+        '1.0.0': {
+          metadata: { date: '2017-01-01' },
+          feature: ['Feature 1'],
+        },
+      },
+      {
+        breaking: [],
+        fix: ['Fix 1'],
+        feature: ['Feature 1', 'Feature 2', 'Feature 3'],
+      }
+    );
+    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+  });
+
+  it('should bump a breaking version if there is a breaking file in the unreleased directory', async () => {
+    mockProject.setup(
+      {
+        '1.0.0': {
+          metadata: { date: '2017-01-01' },
+          feature: ['Feature 1'],
+        },
+      },
+      {
+        fix: ['Fix 1'],
+        feature: ['Feature 1'],
+        breaking: ['Breaking Change 1', 'Breaking Change 2'],
+      }
+    );
+    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+  });
+});

@@ -4,13 +4,13 @@ import * as fs from 'fs-extra';
 
 import { format } from '../../src/util/yaml';
 import Config from '../../src/types/config';
-import { Changelog } from '../../src/types/changelog';
+import { Changelog, ChangeType, Change } from '../../src/types/changelog';
 
 const createMockProject = () => {
   const setup = (
     changelog?: Changelog,
-    _config?: Config,
-    _changeFiles?: string[]
+    changeFiles?: { [type in ChangeType]: Change[] },
+    _config?: Config
   ) => {
     mockDate.set('2017-05-20');
 
@@ -19,8 +19,20 @@ const createMockProject = () => {
       mockFiles['changelog.yaml'] = format(changelog);
     }
 
+    if (changeFiles && Object.keys(changeFiles).length) {
+      let i = 0;
+      Object.keys(changeFiles).forEach((type: ChangeType) => {
+        changeFiles[type].forEach((change: Change) => {
+          mockFiles[
+            `.yamlog-unreleased/${type}-${(++i)
+              .toString()
+              .padStart(17, '0')}.yaml`
+          ] = format(change);
+        });
+      });
+    }
+
     // TODO: Config
-    // TODO: Change files
     mockFs(mockFiles);
   };
 
