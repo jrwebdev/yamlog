@@ -1,6 +1,10 @@
 import { ChangelogConfig } from '../types/config';
 import { ChangeType, Change } from '../types/changelog';
-import { addChange as addUnreleasedDirChange } from './unreleased-dir';
+import {
+  addChange as addUnreleasedDirChange,
+  read as readUnreleasedFiles,
+  deleteFiles as deleteUnreleasedFiles,
+} from './unreleased-dir';
 import { getCurrentVersion, getNextVersion } from './changelog-helpers';
 import {
   addChange as addChangelogChange,
@@ -19,18 +23,31 @@ export const addChange = (
 
 export const bumpVersion = async (config: ChangelogConfig = {}) => {
   let newVersion;
+  // let unreleased: ChangelogVersion;
 
   // TODO: Read from change files
-  const { unreleased = {}, ...released } = await readChangelog();
-  const currentVersion = getCurrentVersion(released);
+  const {
+    unreleased: changelogUnreleased,
+    ...released,
+  } = await readChangelog();
 
-  if (currentVersion) {
+  // TODO: Combine?
+  const unreleased = config.unreleasedDir
+    ? await readUnreleasedFiles(config.unreleasedDir)
+    : changelogUnreleased;
+
+  if (Object.keys(unreleased).length) {
+    const currentVersion = getCurrentVersion(released);
     newVersion = getNextVersion(unreleased, currentVersion, config);
     if (newVersion) {
       await writeChangelog({
         [newVersion]: unreleased,
         ...released,
       });
+
+      if (config.unreleasedDir) {
+        await deleteUnreleasedFiles(config.unreleasedDir);
+      }
     }
   }
 

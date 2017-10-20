@@ -1,4 +1,21 @@
-unreleased:
+0.1.4:
+  feature:
+    - Test 123
+    - Test 456
+0.1.3:
+  feature:
+    - Test 123
+    - Test 456
+0.1.2:
+  feature:
+    - Test 123
+    - Test 456
+0.1.1:
+  feature:
+    - Test
+  fix:
+    - test
+0.1.0:
   breaking:
     - test change 123
     - test change 123

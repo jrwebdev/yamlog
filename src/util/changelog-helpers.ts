@@ -28,7 +28,7 @@ const defaultVersionKeyOrder: Array<'metadata' | ChangeType> = [
   ...changeTypeKeys,
 ];
 
-const sortVersionChangeTypeEntries = (version: ChangelogVersion) =>
+export const sortVersionChangeTypeEntries = (version: ChangelogVersion) =>
   defaultVersionKeyOrder.reduce(
     (acc, key) => (version[key] ? { ...acc, [key]: version[key] } : acc),
     {}

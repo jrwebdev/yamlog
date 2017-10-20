@@ -1,11 +1,14 @@
 import * as moment from 'moment';
 import * as cbGlob from 'glob';
 import * as pify from 'pify';
-import { mkdirs } from 'fs-extra';
+import { mkdirs, emptyDir } from 'fs-extra';
 
 import { ChangeType, Change, ChangelogVersion } from '../types/changelog';
 import { write as writeYamlFile, read as readYamlFile } from './yaml-file';
-import { processChange } from './changelog-helpers';
+import {
+  processChange,
+  sortVersionChangeTypeEntries,
+} from './changelog-helpers';
 
 const defaultDir = '.yamlog-unreleased';
 
@@ -26,19 +29,32 @@ export const addChange = async (
   return writeYamlFile(`${dir}/${filename}`, processChange(change));
 };
 
-export const read = async (_dir = defaultDir) => {
-  const changes: ChangelogVersion = {};
-  const files: string[] = await glob('+(breaking|feature|fix)-*.yaml');
-  if (files && files.length) {
-    files.forEach(async file => {
-      const type = getType(file);
-      if (type) {
-        const change = (await readYamlFile(file)) as Change;
-        // TODO: Clean up ordering etc.
-        changes[type] = [...(changes[type] || []), change];
-      }
-    });
-  }
+export const deleteFiles = (dir = defaultDir) => emptyDir(dir);
 
-  return changes;
+export const read = async (dir = defaultDir): Promise<ChangelogVersion> => {
+  // TODO: Normalise dir path
+  const files: string[] = await glob(`${dir}/+(breaking|feature|fix)-*.yaml`);
+  if (files && files.length) {
+    const reads = files.map(async file => {
+      const type = getType(file);
+      const change = (await readYamlFile(file)) as Change;
+      return { type, change };
+    });
+
+    const changeArr = await Promise.all(reads);
+
+    const changes = changeArr.reduce(
+      (acc: ChangelogVersion, { type, change }) => {
+        if (type) {
+          acc[type] = [...(acc[type] || []), change];
+        }
+        return acc;
+      },
+      {}
+    );
+
+    return sortVersionChangeTypeEntries(changes);
+  } else {
+    return {};
+  }
 };
