@@ -1,39 +1,16 @@
-0.2.1:
+2.0.0:
   metadata:
     date: '2017-10-20'
-  feature:
-    - Test
-0.2.0:
   breaking:
-    - Test 789
+    - Breaking Change 1
   feature:
-    - Test 222
+    - Feature 2
   fix:
-    - Test 111
-0.1.4:
+    - Fix 2
+1.0.0:
+  metadata:
+    date: '2017-01-01'
   feature:
-    - Test 123
-    - Test 456
-0.1.3:
-  feature:
-    - Test 123
-    - Test 456
-0.1.2:
-  feature:
-    - Test 123
-    - Test 456
-0.1.1:
-  feature:
-    - Test
+    - Feature 1
   fix:
-    - test
-0.1.0:
-  breaking:
-    - test change 123
-    - test change 123
-    - test change 123
-  feature:
-    - Testing
-    - Testing
-    - Hello 456
-    - Hello 123
+    - Fix 1

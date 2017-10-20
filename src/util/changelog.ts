@@ -34,7 +34,7 @@ export const bumpVersion = async (config: ChangelogConfig = {}) => {
     ? await readUnreleasedFiles(config.unreleasedDir)
     : changelogUnreleased;
 
-  if (Object.keys(unreleased).length) {
+  if (unreleased && Object.keys(unreleased).length) {
     const currentVersion = getCurrentVersion(released);
     const newVersion = getNextVersion(unreleased, currentVersion, config);
     if (newVersion) {

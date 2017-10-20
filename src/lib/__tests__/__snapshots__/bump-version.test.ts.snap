@@ -2,7 +2,9 @@
 
 exports[`should bump a stable version 1`] = `
 |
-  unreleased:
+  2.0.0:
+    metadata:
+      date: '2017-01-01'
     breaking:
       - Breaking Change 1
     feature:
@@ -10,6 +12,25 @@ exports[`should bump a stable version 1`] = `
     fix:
       - Fix 2
   1.0.0:
+    metadata:
+      date: '2017-01-01'
+    feature:
+      - Feature 1
+    fix:
+      - Fix 1
+
+`;
+
+exports[`should bump an unstable version 1`] = `
+|
+  0.1.1:
+    metadata:
+      date: '2017-01-01'
+    feature:
+      - Feature 2
+    fix:
+      - Fix 2
+  0.1.0:
     metadata:
       date: '2017-01-01'
     feature:

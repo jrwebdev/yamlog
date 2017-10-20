@@ -34,6 +34,10 @@
   version "3.0.1"
   resolved "http://localhost:8081/repository/jrweb/@types/minimatch/-/minimatch-3.0.1.tgz#b683eb60be358304ef146f5775db4c0e3696a550"
 
+"@types/mockdate@^2.0.0":
+  version "2.0.0"
+  resolved "http://localhost:8081/repository/jrweb/@types/mockdate/-/mockdate-2.0.0.tgz#aaf388a1ead3b0f5ed6dc1611956ea7b40a57d3c"
+
 "@types/moment@^2.13.0":
   version "2.13.0"
   resolved "http://localhost:8081/repository/jrweb/@types/moment/-/moment-2.13.0.tgz#604ebd189bc3bc34a1548689404e61a2a4aac896"
@@ -1845,6 +1849,10 @@ minimist@~0.0.1:
   resolved "http://localhost:8081/repository/jrweb/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mockdate@^2.0.2:
+  version "2.0.2"
+  resolved "http://localhost:8081/repository/jrweb/mockdate/-/mockdate-2.0.2.tgz#5ae0c0eaf8fe23e009cd01f9889b42c4f634af12"
 
 moment@*, moment@^2.19.1:
   version "2.19.1"
