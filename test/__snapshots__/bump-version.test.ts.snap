@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`package.json should write the version to package.json 1`] = `
+1.0.1:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
 exports[`should bump a major version if there are unreleased breaking changes 1`] = `
 2.0.0:
   metadata:

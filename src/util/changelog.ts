@@ -51,6 +51,8 @@ export const bumpVersion = async (config: ChangelogConfig = {}) => {
       if (config.unreleasedDir) {
         await deleteUnreleasedFiles(config.unreleasedDir);
       }
+
+      return newVersion;
     }
   }
 

@@ -187,3 +187,21 @@ describe('unreleased directory', () => {
     await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
   });
 });
+
+describe('package.json', () => {
+  it('should write the version to package.json', async () => {
+    mockProject.setup({
+      unreleased: {
+        fix: ['Fix 1'],
+      },
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    });
+
+    await bumpVersion();
+    const packageJson = await mockProject.readPackageJson();
+    expect(packageJson.version).toEqual('1.0.1');
+  });
+});

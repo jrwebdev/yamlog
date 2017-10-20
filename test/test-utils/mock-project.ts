@@ -16,9 +16,14 @@ const createMockProject = () => {
     changeFiles?: { [type in ChangeType]: Change[] },
     _config?: Config
   ) => {
+    const mockFiles: any = {};
+
     mockDate.set('2017-05-20 14:00');
 
-    const mockFiles: any = {};
+    mockFiles['package.json'] = JSON.stringify({
+      version: '0.0.0',
+    });
+
     if (changelog) {
       mockFiles['changelog.yaml'] = format(changelog);
     }
@@ -59,11 +64,17 @@ const createMockProject = () => {
     };
   };
 
+  const readPackageJson = async () => {
+    const contents = await fs.readFile('package.json');
+    return JSON.parse(contents.toString());
+  };
+
   return {
     setup,
     teardown,
     readChangelog,
     readChangeFile,
+    readPackageJson,
   };
 };
 
