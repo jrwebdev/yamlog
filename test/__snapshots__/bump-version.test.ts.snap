@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`package.json should read the version from the package.json if there are no releases 1`] = `
+1.0.2:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+
+`;
+
 exports[`package.json should write the version to package.json 1`] = `
 1.0.1:
   metadata:

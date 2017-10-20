@@ -1,18 +1,36 @@
 import * as moment from 'moment';
 
-import { ChangelogConfig } from '../types/config';
-import { ChangeType, Change } from '../types/changelog';
+import { ChangelogConfig, CurrentVersionLoader } from '../types/config';
+import { Changelog, ChangeType, Change } from '../types/changelog';
+
 import {
   addChange as addUnreleasedDirChange,
   read as readUnreleasedFiles,
   deleteFiles as deleteUnreleasedFiles,
 } from './unreleased-dir';
-import { getCurrentVersion, getNextVersion } from './changelog-helpers';
+import { getNextVersion } from './changelog-helpers';
 import {
   addChange as addChangelogChange,
   read as readChangelog,
   write as writeChangelog,
 } from './changelog-file';
+
+const loadCurrentVersion = async (
+  loaders: CurrentVersionLoader,
+  releasedVersions: Changelog
+) => {
+  if (Array.isArray(loaders)) {
+    let version;
+    let i = 0;
+    while (!version && loaders[i]) {
+      version = await loaders[i](releasedVersions);
+      i += 1;
+    }
+    return version;
+  } else {
+    return await loaders(releasedVersions);
+  }
+};
 
 export const addChange = (
   changeType: ChangeType,
@@ -23,7 +41,10 @@ export const addChange = (
     ? addUnreleasedDirChange(changeType, change, unreleasedDir)
     : addChangelogChange(changeType, change);
 
-export const bumpVersion = async (config: ChangelogConfig = {}) => {
+export const bumpVersion = async (
+  currentVersionLoader: CurrentVersionLoader,
+  config: ChangelogConfig = {}
+) => {
   const {
     unreleased: changelogUnreleased,
     ...released,
@@ -35,7 +56,11 @@ export const bumpVersion = async (config: ChangelogConfig = {}) => {
     : changelogUnreleased;
 
   if (unreleased && Object.keys(unreleased).length) {
-    const currentVersion = getCurrentVersion(released);
+    const currentVersion = await loadCurrentVersion(
+      currentVersionLoader,
+      released
+    );
+
     const newVersion = getNextVersion(unreleased, currentVersion, config);
     if (newVersion) {
       await writeChangelog({

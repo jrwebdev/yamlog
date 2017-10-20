@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as deepFreeze from 'deep-freeze';
 import { existsSync } from 'fs-extra';
 import Config from '../types/config';
 
@@ -20,19 +21,18 @@ const getConfig = () => {
     config = require(packageJson).yamlog;
   }
 
+  config = { ...config };
+
+  // TODO: Fix types
   if ((config as any).unreleasedDir === true) {
     config.unreleasedDir = '.yamlog-unreleased';
   }
 
   if (!config.startVersion) {
-    // TODO: Combine with config load from package.json
-    // TODO: Singleton module which yamlog-git-commit can
-    //       pass config into.
-    // TODO: Set default to 0.1.0 / 1.0.0 based on stable/unstable
-    config.startVersion = require(packageJson).version;
+    // config.startVersion = require(packageJson).version;
   }
 
-  return config;
+  return deepFreeze(config);
 };
 
 export default getConfig();

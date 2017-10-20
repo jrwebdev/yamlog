@@ -204,4 +204,16 @@ describe('package.json', () => {
     const packageJson = await mockProject.readPackageJson();
     expect(packageJson.version).toEqual('1.0.1');
   });
+
+  it('should read the version from the package.json if there are no releases', async () => {
+    mockProject.setup({
+      unreleased: {
+        fix: ['Fix 1'],
+      },
+    });
+
+    await bumpVersion();
+    const packageJson = await mockProject.readPackageJson();
+    expect(packageJson.version).toEqual('0.0.1');
+  });
 });
