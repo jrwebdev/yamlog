@@ -10,7 +10,7 @@ import {
 
 const defaultChangelogFilename = 'changelog.yaml';
 
-const getChangelogFile = () => path.resolve(defaultChangelogFilename);
+const getChangelogFile = () => defaultChangelogFilename;
 
 export const read = async () => {
   const changelogFile = getChangelogFile();

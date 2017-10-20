@@ -1,4 +1,5 @@
 import * as mockFs from 'mock-fs';
+import * as mockDate from 'mockdate';
 import * as fs from 'fs-extra';
 import * as yaml from 'js-yaml';
 
@@ -10,19 +11,23 @@ export const getMock = <T>(fn: (...args: any[]) => T) => fn as jest.Mock<T>;
 // TODO: Use uuid for project dir?
 export const createMockProject = () => {
   const setup = async (
-    changelog: Changelog,
+    changelog?: Changelog,
     _config?: Config,
     _changeFiles?: string[]
   ) => {
-    // TODO: no changelog.yaml
+    mockDate.set('2017-05-20');
+    const mockFiles: any = {};
+    if (changelog) {
+      mockFiles['changelog.yaml'] = yaml.safeDump(changelog);
+    }
+
     // TODO: Config
-    // TODO: Changelog
-    mockFs({
-      'changelog.yaml': yaml.safeDump(changelog),
-    });
+    // TODO: Change files
+    mockFs(mockFiles);
   };
 
   const teardown = () => {
+    mockDate.reset();
     mockFs.restore();
   };
 
