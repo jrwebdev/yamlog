@@ -1,6 +1,7 @@
 dist
 build
 .vscode
+test/.mock-project*
 
 # Logs
 logs

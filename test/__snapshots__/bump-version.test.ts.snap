@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should bump the patch version for a fix 1`] = `
+|
+  unreleased:
+    fix:
+      - Fix 1
+  1.0.0:
+    metadata:
+      date: '2017-01-01'
+    feature:
+      - Feature 1
+
+`;
