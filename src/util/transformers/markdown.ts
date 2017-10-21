@@ -30,5 +30,5 @@ export default (version: VersionString, changes: ChangelogVersion) => {
     }
   });
 
-  return lines.join('\n');
+  return `${lines.join('\n')}\n`;
 };
