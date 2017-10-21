@@ -1,6 +1,6 @@
 {
   "name": "yamlog",
-  "version": "0.1.1",
+  "version": "0.0.0",
   "main": "index.js",
   "repository": "git@github.com:jrwebdev/yamlog.git",
   "author": "jrwebdev <web@jravenscroft.co.uk>",
@@ -9,7 +9,9 @@
     "unstable": true
   },
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "prebuild": "rimraf dist",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.1",
@@ -27,6 +29,7 @@
     "jest": "^21.2.1",
     "mock-fs": "^4.4.2",
     "prettier": "^1.7.4",
+    "rimraf": "^2.6.2",
     "ts-jest": "^21.1.2",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.3"
