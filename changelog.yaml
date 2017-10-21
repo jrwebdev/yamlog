@@ -1,0 +1,3 @@
+unreleased:
+  feature:
+    - Generate CHANGELOG.md on version bump
