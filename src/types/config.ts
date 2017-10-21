@@ -13,7 +13,7 @@ export interface ChangelogConfig {
   unstable?: boolean;
   unreleasedDir?: string;
   startVersion?: string;
-  currentVersionLoader?: CurrentVersionLoader;
+  // currentVersionLoader?: CurrentVersionLoader;
 }
 
 export default interface Config extends ChangelogConfig {

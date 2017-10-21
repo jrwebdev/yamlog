@@ -1,11 +1,14 @@
 import * as path from 'path';
-import { writeFile } from 'fs-extra';
+import { writeFile, readFile } from 'fs-extra';
 
 import { VersionString } from '../types/version';
 
-const getFile = () => path.resolve('package.json');
+const getFilePath = () => path.resolve('package.json');
 
-export const read = () => require(getFile());
+export const read = async () => {
+  const contents = await readFile(getFilePath());
+  return JSON.parse(contents.toString());
+};
 
 export const readVersion = async () => {
   const packageJson = await read();
@@ -15,5 +18,5 @@ export const readVersion = async () => {
 export const writeVersion = async (version: VersionString) => {
   const packageJson = await read();
   packageJson.version = version;
-  return writeFile(getFile(), JSON.stringify(packageJson, null, 2));
+  return writeFile(getFilePath(), JSON.stringify(packageJson, null, 2));
 };

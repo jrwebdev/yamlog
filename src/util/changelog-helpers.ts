@@ -9,7 +9,7 @@ import { VersionString } from '../types/version';
 import { sort, isUnstable, bumpMajor, bumpMinor, bumpPatch } from './version';
 
 const unstableBump = {
-  startVersion: '0.1.0',
+  startVersion: '0.0.1',
   breaking: bumpMinor,
   feature: bumpPatch,
   fix: bumpPatch,

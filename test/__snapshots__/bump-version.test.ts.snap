@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`package.json should read the version from the package.json if there are no releases 1`] = `
-1.0.2:
-  metadata:
-    date: '2017-05-20'
-  fix:
-    - Fix 1
-
-`;
-
-exports[`package.json should write the version to package.json 1`] = `
-1.0.1:
-  metadata:
-    date: '2017-05-20'
-  fix:
-    - Fix 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
-
-`;
-
 exports[`should bump a major version if there are unreleased breaking changes 1`] = `
 2.0.0:
   metadata:
@@ -148,6 +125,29 @@ exports[`should ignore the unstable option if the project is already at v1 1`] =
 `;
 
 exports[`should leave the changelog unchanged if there are no unreleased changes 1`] = `
+1.0.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should read the version from the package.json if there are no releases 1`] = `
+1.0.0:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
+
+`;
+
+exports[`should write the version to package.json 1`] = `
+1.0.1:
+  metadata:
+    date: '2017-05-20'
+  fix:
+    - Fix 1
 1.0.0:
   metadata:
     date: '2017-01-01'

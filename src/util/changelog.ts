@@ -22,6 +22,7 @@ const loadCurrentVersion = async (
   if (Array.isArray(loaders)) {
     let version;
     let i = 0;
+    // TODO: Change to use recursion
     while (!version && loaders[i]) {
       version = await loaders[i](releasedVersions);
       i += 1;
