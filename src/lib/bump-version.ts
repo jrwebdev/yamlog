@@ -1,8 +1,10 @@
 import { ChangelogConfig, CurrentVersionLoader } from '../types/config';
 
 import * as changelog from '../util/changelog';
+import * as changelogMd from '../util/changelog-md';
 import * as packageJson from '../util/package-json';
 import { getCurrentVersion as getCurrentChangelogVersion } from '../util/changelog-helpers';
+import markdownTransformer from '../util/transformers/markdown';
 
 export default async (config: ChangelogConfig = {}) => {
   // TODO: Allow loader to be passed in
@@ -13,9 +15,19 @@ export default async (config: ChangelogConfig = {}) => {
   ];
 
   const newVersion = await changelog.bumpVersion(currentVersionLoader, config);
-  if (newVersion) {
-    await packageJson.writeVersion(newVersion);
-  }
 
-  return newVersion;
+  if (newVersion) {
+    const { version, changes } = newVersion;
+
+    const markdown = markdownTransformer(version, changes);
+
+    await Promise.all([
+      changelogMd.prepend(markdown),
+      packageJson.writeVersion(version),
+    ]);
+
+    return version;
+  } else {
+    return undefined;
+  }
 };

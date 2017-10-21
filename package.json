@@ -13,7 +13,7 @@
   },
   "scripts": {
     "log": "ts-node src/bin/yamlog",
-    "bump-version": "ts-node/src/bin/yamlog bump-version",
+    "bump": "ts-node src/bin/yamlog bump-version",
     "test": "jest --watch",
     "test:all": "jest --coverage",
     "prebuild": "rimraf dist",

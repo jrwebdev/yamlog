@@ -1,7 +1,14 @@
 import * as moment from 'moment';
 
 import { ChangelogConfig, CurrentVersionLoader } from '../types/config';
-import { Changelog, ChangeType, Change } from '../types/changelog';
+import { VersionString } from '../types/version';
+import {
+  Changelog,
+  ChangeType,
+  Change,
+  ChangelogVersion,
+  ChangelogVersionMetadata,
+} from '../types/changelog';
 
 import {
   addChange as addUnreleasedDirChange,
@@ -15,6 +22,12 @@ import {
   write as writeChangelog,
 } from './changelog-file';
 
+interface NewVersion {
+  version: VersionString;
+  metadata: ChangelogVersionMetadata;
+  changes: ChangelogVersion;
+}
+
 const loadCurrentVersion = async (
   loaders: CurrentVersionLoader,
   releasedVersions: Changelog
@@ -22,7 +35,6 @@ const loadCurrentVersion = async (
   if (Array.isArray(loaders)) {
     let version;
     let i = 0;
-    // TODO: Change to use recursion
     while (!version && loaders[i]) {
       version = await loaders[i](releasedVersions);
       i += 1;
@@ -52,24 +64,26 @@ export const bumpVersion = async (
   } = await readChangelog();
 
   // TODO: Combine?
-  const unreleased = config.unreleasedDir
+  const changes = config.unreleasedDir
     ? await readUnreleasedFiles(config.unreleasedDir)
     : changelogUnreleased;
 
-  if (unreleased && Object.keys(unreleased).length) {
+  if (changes && Object.keys(changes).length) {
     const currentVersion = await loadCurrentVersion(
       currentVersionLoader,
       released
     );
 
-    const newVersion = getNextVersion(unreleased, currentVersion, config);
-    if (newVersion) {
+    const version = getNextVersion(changes, currentVersion, config);
+    if (version) {
+      const metadata = {
+        date: moment().format('YYYY-MM-DD'),
+      };
+
       await writeChangelog({
-        [newVersion]: {
-          metadata: {
-            date: moment().format('YYYY-MM-DD'),
-          },
-          ...unreleased,
+        [version]: {
+          metadata,
+          ...changes,
         },
         ...released,
       });
@@ -77,6 +91,12 @@ export const bumpVersion = async (
       if (config.unreleasedDir) {
         await deleteUnreleasedFiles(config.unreleasedDir);
       }
+
+      const newVersion: NewVersion = {
+        version,
+        metadata,
+        changes,
+      };
 
       return newVersion;
     }
