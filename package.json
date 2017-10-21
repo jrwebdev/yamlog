@@ -13,6 +13,9 @@
     "prebuild": "rimraf dist",
     "build": "tsc"
   },
+  "bin": {
+    "yamlog": "./bin/yamlog"
+  },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.1",
     "@types/fs-extra": "^4.0.2",
