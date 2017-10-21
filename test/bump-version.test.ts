@@ -199,7 +199,8 @@ it('should read the version from the package.json if there are no releases', asy
 it('should write a CHANGELOG.md file', async () => {
   mockProject.setup({
     unreleased: {
-      fix: ['Fix 1'],
+      feature: ['Feature 1', 'Feature 2'],
+      fix: ['Fix 1', 'Fix 2'],
     },
   });
 
@@ -213,7 +214,9 @@ it('should add to an existing CHANGELOG.md file', async () => {
   mockProject.setup(
     {
       unreleased: {
+        feature: ['Feature 1', 'Feature 2'],
         fix: ['Fix 1'],
+        breaking: ['Breaking Change 1'],
       },
       '1.0.0': {
         metadata: { date: '2017-01-01' },

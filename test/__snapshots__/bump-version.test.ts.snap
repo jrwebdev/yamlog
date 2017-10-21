@@ -1,8 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should add to an existing CHANGELOG.md file 1`] = `
-## 1.0.1 (2017-05-20)
-### Fix
+## 2.0.0 (2017-05-20)
+### BREAKING CHANGES
+* Breaking Change 1
+### Features
+* Feature 1
+* Feature 2
+### Fixes
 * Fix 1
 
 ## 1.0.0 (2017-01-01)
@@ -147,8 +152,12 @@ exports[`should leave the changelog unchanged if there are no unreleased changes
 
 exports[`should write a CHANGELOG.md file 1`] = `
 ## 1.0.0 (2017-05-20)
-### Fix
+### Features
+* Feature 1
+* Feature 2
+### Fixes
 * Fix 1
+* Fix 2
 
 
 `;

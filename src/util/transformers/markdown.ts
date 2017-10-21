@@ -11,8 +11,8 @@ type ChangeTypeHeadingMap = { [key in ChangeType]: string };
 
 const changeTypeHeadingMap: ChangeTypeHeadingMap = {
   breaking: 'BREAKING CHANGES',
-  feature: 'Feature',
-  fix: 'Fix',
+  feature: 'Features',
+  fix: 'Fixes',
 };
 
 export default (
