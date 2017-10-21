@@ -1,12 +1,15 @@
 {
   "name": "yamlog",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "repository": "git@github.com:jrwebdev/yamlog.git",
   "author": "jrwebdev <web@jravenscroft.co.uk>",
   "license": "MIT",
   "yamlog": {
     "unstable": true
+  },
+  "bin": {
+    "yamlog": "./bin/yamlog.js"
   },
   "scripts": {
     "log": "ts-node src/bin/yamlog",
@@ -15,9 +18,6 @@
     "test:all": "jest --coverage",
     "prebuild": "rimraf dist",
     "build": "tsc"
-  },
-  "bin": {
-    "yamlog": "./bin/yamlog"
   },
   "dependencies": {
     "fs-extra": "^4.0.2",
