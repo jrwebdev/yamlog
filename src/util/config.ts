@@ -30,6 +30,7 @@ const getConfig = () => {
 
   config.unstable = userConfig.unstable;
   config.startVersion = userConfig.startVersion;
+  config.publish = userConfig.publish || {};
 
   return config;
 };

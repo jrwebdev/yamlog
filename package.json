@@ -6,7 +6,10 @@
   "author": "jrwebdev <web@jravenscroft.co.uk>",
   "license": "MIT",
   "yamlog": {
-    "unstable": true
+    "unstable": true,
+    "publish": {
+      "dir": "dist"
+    }
   },
   "bin": {
     "yamlog": "./bin/yamlog.js"
@@ -18,14 +21,17 @@
     "test": "jest --watch",
     "test:all": "jest --coverage",
     "prebuild": "rimraf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "release": "ts-node src/bin/yamlog publish"
   },
   "dependencies": {
     "commander": "^2.11.0",
+    "execa": "^0.8.0",
     "fs-extra": "^4.0.2",
     "glob": "^7.1.2",
     "inquirer": "^3.3.0",
     "js-yaml": "^3.10.0",
+    "listr": "^0.12.0",
     "mockdate": "^2.0.2",
     "moment": "^2.19.1",
     "pify": "^3.0.0",
@@ -34,6 +40,7 @@
   },
   "devDependencies": {
     "@types/commander": "^2.11.0",
+    "@types/execa": "^0.7.1",
     "@types/fs-extra": "^4.0.2",
     "@types/glob": "^5.0.33",
     "@types/inquirer": "^0.0.35",
