@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "jest --watch",
+    "test:all": "jest --coverage",
     "prebuild": "rimraf dist",
     "build": "tsc"
   },

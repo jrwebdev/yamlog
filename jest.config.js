@@ -16,6 +16,7 @@ module.exports = {
     '!**/*.d.ts',
     '!**/types/**/*.*',
     '!**/index.ts',
+    '!**/bin/**/*.*',
   ],
   mapCoverage: true,
 };
