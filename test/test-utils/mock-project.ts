@@ -17,15 +17,17 @@ const createMockProject = () => {
   const setup = (
     changelog?: Changelog,
     changeFiles?: { [type in ChangeType]: Change[] },
-    _config?: Config
+    mockFiles: { [filename: string]: any } = {}
   ) => {
-    const mockFiles: any = {};
+    // const mockFiles: any = {};
 
     mockDate.set('2017-05-20 14:00');
 
-    mockFiles['package.json'] = JSON.stringify({
-      version: '0.0.0',
-    });
+    mockFiles['package.json'] =
+      mockFiles['package.json'] ||
+      JSON.stringify({
+        version: '0.0.0',
+      });
 
     if (changelog) {
       mockFiles['changelog.yaml'] = format(changelog);

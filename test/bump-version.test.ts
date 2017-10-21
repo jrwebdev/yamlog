@@ -1,4 +1,4 @@
-import { existsSync } from 'fs-extra';
+import { existsSync, readFile } from 'fs-extra';
 import { createMockProject } from './test-utils';
 
 import bumpVersion from '../src/lib/bump-version';
@@ -10,10 +10,8 @@ beforeEach(() => {
   expect.hasAssertions();
 });
 
-afterEach(async () => {
-  const changelog = await mockProject.readChangelog();
+afterEach(() => {
   mockProject.teardown();
-  expect(changelog).toMatchSnapshot();
 });
 
 it('should leave the changelog unchanged if there are no unreleased changes', async () => {
@@ -24,6 +22,9 @@ it('should leave the changelog unchanged if there are no unreleased changes', as
     },
   });
   await bumpVersion();
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a patch version if there are unreleased fixes', async () => {
@@ -37,6 +38,9 @@ it('should bump a patch version if there are unreleased fixes', async () => {
     },
   });
   await bumpVersion();
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a minor version if there are unreleased features', async () => {
@@ -51,6 +55,9 @@ it('should bump a minor version if there are unreleased features', async () => {
     },
   });
   await bumpVersion();
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a major version if there are unreleased breaking changes', async () => {
@@ -66,6 +73,9 @@ it('should bump a major version if there are unreleased breaking changes', async
     },
   });
   await bumpVersion();
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a patch version if there are unreleased fixes for an unstable project', async () => {
@@ -79,6 +89,9 @@ it('should bump a patch version if there are unreleased fixes for an unstable pr
     },
   });
   await bumpVersion({ unstable: true });
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a patch version if there are unreleased features for an unstable project', async () => {
@@ -93,6 +106,9 @@ it('should bump a patch version if there are unreleased features for an unstable
     },
   });
   await bumpVersion({ unstable: true });
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump a minor version if there are unreleased fixes for an unstable project', async () => {
@@ -108,6 +124,9 @@ it('should bump a minor version if there are unreleased fixes for an unstable pr
     },
   });
   await bumpVersion({ unstable: true });
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should bump to v1 regardless of change type if an unstable project is now stable', async () => {
@@ -121,6 +140,9 @@ it('should bump to v1 regardless of change type if an unstable project is now st
     },
   });
   await bumpVersion();
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should ignore the unstable option if the project is already at v1', async () => {
@@ -134,6 +156,9 @@ it('should ignore the unstable option if the project is already at v1', async ()
     },
   });
   await bumpVersion({ unstable: true });
+  const changelog = await mockProject.readChangelog();
+  mockProject.teardown();
+  expect(changelog).toMatchSnapshot();
 });
 
 it('should write the version to package.json', async () => {
@@ -153,7 +178,25 @@ it('should write the version to package.json', async () => {
 });
 
 // TODO: Fix
-xit('should read the version from the package.json if there are no releases', async () => {
+it('should read the version from the package.json if there are no releases', async () => {
+  mockProject.setup(
+    {
+      unreleased: {
+        fix: ['Fix 1'],
+      },
+    },
+    {},
+    {
+      'package.json': JSON.stringify({ version: '5.1.4' }),
+    }
+  );
+
+  await bumpVersion();
+  const packageJson = await mockProject.readPackageJson();
+  expect(packageJson.version).toEqual('5.1.5');
+});
+
+it('should write a CHANGELOG.md file', async () => {
   mockProject.setup({
     unreleased: {
       fix: ['Fix 1'],
@@ -161,9 +204,37 @@ xit('should read the version from the package.json if there are no releases', as
   });
 
   await bumpVersion();
-  const packageJson = await mockProject.readPackageJson();
-  console.log(packageJson.version);
-  expect(packageJson.version).toEqual('0.0.1');
+  const changelogMd = await readFile('CHANGELOG.md');
+  mockProject.teardown();
+  expect(changelogMd.toString()).toMatchSnapshot();
+});
+
+it('should add to an existing CHANGELOG.md file', async () => {
+  mockProject.setup(
+    {
+      unreleased: {
+        fix: ['Fix 1'],
+      },
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {},
+    {
+      'CHANGELOG.md': [
+        '## 1.0.0 (2017-01-01)',
+        '### Features',
+        '* Feature 1',
+        '\n',
+      ].join('\n'),
+    }
+  );
+
+  await bumpVersion();
+  const changelogMd = await readFile('CHANGELOG.md');
+  mockProject.teardown();
+  expect(changelogMd.toString()).toMatchSnapshot();
 });
 
 describe('unreleased directory', () => {
@@ -182,6 +253,9 @@ describe('unreleased directory', () => {
       }
     );
     await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+    const changelog = await mockProject.readChangelog();
+    mockProject.teardown();
+    expect(changelog).toMatchSnapshot();
   });
 
   it('should bump a minor version if there is a feature file in the unreleased directory', async () => {
@@ -199,6 +273,9 @@ describe('unreleased directory', () => {
       }
     );
     await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+    const changelog = await mockProject.readChangelog();
+    mockProject.teardown();
+    expect(changelog).toMatchSnapshot();
   });
 
   it('should bump a breaking version if there is a breaking file in the unreleased directory', async () => {
@@ -216,6 +293,9 @@ describe('unreleased directory', () => {
       }
     );
     await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+    const changelog = await mockProject.readChangelog();
+    mockProject.teardown();
+    expect(changelog).toMatchSnapshot();
   });
 
   it('should remove the unreleased directory on bumping the version', async () => {
