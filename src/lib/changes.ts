@@ -6,7 +6,7 @@ import * as changelog from '../util/changelog';
 import * as yaml from '../util/yaml';
 import markdownTransformer from '../util/transformers/markdown';
 
-interface ChangesOptions {
+export interface ChangesOptions {
   transform?: 'yaml' | 'markdown' | 'json' | 'text';
   version?: VersionQuery;
 }
@@ -32,7 +32,7 @@ export default async (
   config: ChangelogConfig = {}
 ) => {
   const changes = await changelog.getChanges(options.version, {
-    unreleasedDir: config.unreleasedDir,
+    unreleasedDir: config.unreleasedDir || '',
   });
 
   switch (options.transform) {
