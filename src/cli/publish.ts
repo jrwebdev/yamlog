@@ -66,9 +66,8 @@ const run = async () => {
     title: 'Publishing npm package',
     enabled: ctx => !!ctx.newVersion,
     task: () =>
-      execa.shell('npm publish', {
+      execa('npm', ['publish'], {
         cwd: publishConfig.dir || process.cwd(),
-        stdio: 'inherit',
       }),
   });
 
@@ -78,10 +77,7 @@ const run = async () => {
       enabled: ctx => !!ctx.newVersion,
       task: ctx =>
         execa.shell(
-          `git commit package.json changelog.yaml CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`,
-          {
-            stdio: 'inherit',
-          }
+          `git commit package.json changelog.yaml CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
         ),
     });
   }
@@ -90,10 +86,7 @@ const run = async () => {
     tasks.push({
       title: 'Tagging release',
       enabled: ctx => !!ctx.newVersion,
-      task: ctx =>
-        execa.shell(`git tag v${ctx.newVersion}`, {
-          stdio: 'inherit',
-        }),
+      task: ctx => execa.shell(`git tag v${ctx.newVersion}`),
     });
   }
 
@@ -101,10 +94,7 @@ const run = async () => {
     tasks.push({
       title: 'Pushing changes to repository',
       enabled: ctx => !!ctx.newVersion,
-      task: () =>
-        execa.shell('git push origin && git push --tags origin', {
-          stdio: 'inherit',
-        }),
+      task: () => execa.shell('git push origin && git push --tags origin'),
     });
   }
 
