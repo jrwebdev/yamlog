@@ -17,9 +17,9 @@ export default async (config: ChangelogConfig = {}) => {
   const newVersion = await changelog.bumpVersion(currentVersionLoader, config);
 
   if (newVersion) {
-    const { version, changes } = newVersion;
+    const { version, metadata, changes } = newVersion;
 
-    const markdown = markdownTransformer(version, changes);
+    const markdown = markdownTransformer(version, changes, metadata);
 
     await Promise.all([
       changelogMd.prepend(markdown),

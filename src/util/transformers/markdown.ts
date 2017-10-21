@@ -1,5 +1,9 @@
 import { VersionString } from '../../types/version';
-import { ChangelogVersion, ChangeType } from '../../types/changelog';
+import {
+  ChangelogVersion,
+  ChangelogVersionMetadata,
+  ChangeType,
+} from '../../types/changelog';
 
 type ChangeTypeHeadingMap = { [key in ChangeType]: string };
 
@@ -11,11 +15,17 @@ const changeTypeHeadingMap: ChangeTypeHeadingMap = {
   fix: 'Fix',
 };
 
-export default (version: VersionString, changes: ChangelogVersion) => {
+export default (
+  version: VersionString,
+  changes: ChangelogVersion,
+  metadata?: ChangelogVersionMetadata
+) => {
   const lines: string[] = [];
 
-  // TODO: Metadata
-  lines.push(`## ${version}`);
+  let versionHeader = `## ${version}`;
+  versionHeader += metadata ? ` (${metadata.date})` : '';
+  lines.push(versionHeader);
+
   Object.keys(changeTypeHeadingMap).forEach((changeType: ChangeType) => {
     const changeTypeChanges = changes[changeType];
     if (changeTypeChanges) {
