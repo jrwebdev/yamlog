@@ -5,9 +5,11 @@ import { default as changesLib, ChangesOptions } from '../lib/changes';
 
 const run = async () => {
   // TODO: Validate args
-  const transform = argv.transform || 'yaml';
+  const format = argv.format || 'yaml';
 
-  let options: ChangesOptions = { transform };
+  let options: ChangesOptions = { format };
+
+  console.log(argv);
 
   if (argv.latest) {
     options.version = 'latest';

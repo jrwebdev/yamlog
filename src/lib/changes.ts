@@ -4,10 +4,10 @@ import { VersionQuery } from '../types/version';
 
 import * as changelog from '../util/changelog';
 import * as yaml from '../util/yaml';
-import markdownTransformer from '../util/transformers/markdown';
+import markdownFormatter from '../util/formatters/markdown';
 
 export interface ChangesOptions {
-  transform?: 'yaml' | 'markdown' | 'json' | 'text';
+  format?: 'yaml' | 'markdown' | 'json' | 'text';
   version?: VersionQuery;
 }
 
@@ -17,13 +17,13 @@ const isChangelogVersion = (version: any): version is ChangelogVersion =>
   (version.metadata || version.breaking || version.feature || version.fix);
 
 // TODO: Move
-const transformMarkdown = (versions: Changelog | ChangelogVersion) =>
+const formatMarkdown = (versions: Changelog | ChangelogVersion) =>
   isChangelogVersion(versions)
-    ? markdownTransformer(versions)
+    ? markdownFormatter(versions)
     : Object.keys(versions)
         .map(version => {
           const { metadata, ...changes } = versions[version];
-          return markdownTransformer(changes, version, metadata);
+          return markdownFormatter(changes, version, metadata);
         })
         .join('\n');
 
@@ -35,13 +35,17 @@ export default async (
     unreleasedDir: config.unreleasedDir || '',
   });
 
-  switch (options.transform) {
+  if (!changes) {
+    return '';
+  }
+
+  switch (options.format) {
     case 'yaml':
       return yaml.format(changes);
     case 'json':
       return JSON.stringify(changes, null, 2);
     case 'markdown':
-      return transformMarkdown(changes);
+      return formatMarkdown(changes);
     default:
       return changes;
   }

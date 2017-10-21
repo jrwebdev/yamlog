@@ -7,13 +7,14 @@ import {
 
 type ChangeTypeHeadingMap = { [key in ChangeType]: string };
 
-// TODO: Refactor to make more declarative + add generic transformer function
-
 const changeTypeHeadingMap: ChangeTypeHeadingMap = {
   breaking: 'BREAKING CHANGES',
   feature: 'Features',
   fix: 'Fixes',
 };
+
+// TODO: Refactor to make more declarative + add generic format function
+// TODO: Change to accept either a changelog or a changelog version
 
 export default (
   changes: ChangelogVersion,

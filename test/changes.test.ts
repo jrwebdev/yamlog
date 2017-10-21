@@ -63,44 +63,44 @@ it('should return all changes for the project except unreleased', async () => {
 });
 
 it('should return changes in JSON', async () => {
-  const c = await changes({ transform: 'json' });
+  const c = await changes({ format: 'json' });
   testSnapshot(c);
 });
 
 it('should return changes in Yaml', async () => {
-  const c = await changes({ transform: 'yaml' });
+  const c = await changes({ format: 'yaml' });
   testSnapshot(c);
 });
 
 it('should return changes in markdown', async () => {
-  const c = await changes({ transform: 'markdown' });
+  const c = await changes({ format: 'markdown' });
   testSnapshot(c);
 });
 
 // TODO
 xit('should return changes in plain text', async () => {
-  const c = await changes({ transform: 'text' });
+  const c = await changes({ format: 'text' });
   testSnapshot(c);
 });
 
 it('should return a single version', async () => {
-  const c = await changes({ transform: 'yaml', version: '2.0.0' });
+  const c = await changes({ format: 'yaml', version: '2.0.0' });
   testSnapshot(c);
 });
 
 it('should return a single version in markdown', async () => {
-  const c = await changes({ transform: 'markdown', version: '2.0.0' });
+  const c = await changes({ format: 'markdown', version: '2.0.0' });
   testSnapshot(c);
 });
 
 it('should return unreleased changes', async () => {
-  const c = await changes({ transform: 'yaml', version: 'unreleased' });
+  const c = await changes({ format: 'yaml', version: 'unreleased' });
   testSnapshot(c);
 });
 
 // TODO: Fix
 it('should return unreleased changes in markdown', async () => {
-  const c = await changes({ transform: 'markdown', version: 'unreleased' });
+  const c = await changes({ format: 'markdown', version: 'unreleased' });
   testSnapshot(c);
 });
 
@@ -121,20 +121,20 @@ it('should return unreleased changes from change files', async () => {
   );
 
   const c = await changes(
-    { transform: 'yaml', version: 'unreleased' },
+    { format: 'yaml', version: 'unreleased' },
     { unreleasedDir: '.yamlog-unreleased' }
   );
   testSnapshot(c);
 });
 
 it('should return the latest version', async () => {
-  const c = await changes({ transform: 'yaml', version: 'latest' });
+  const c = await changes({ format: 'yaml', version: 'latest' });
   testSnapshot(c);
 });
 
 it('should return a range of versions', async () => {
   const c = await changes({
-    transform: 'yaml',
+    format: 'yaml',
     version: { from: '0.2.0', to: '2.0.0' },
   });
   testSnapshot(c);
@@ -204,6 +204,6 @@ it('should filter and sort versions correctly when returning a range', async () 
 });
 
 it('should return a version from a specified version to the latest version', async () => {
-  const c = await changes({ transform: 'yaml', version: { from: '1.0.0' } });
+  const c = await changes({ format: 'yaml', version: { from: '1.0.0' } });
   testSnapshot(c);
 });

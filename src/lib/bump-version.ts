@@ -4,7 +4,7 @@ import * as changelog from '../util/changelog';
 import * as changelogMd from '../util/changelog-md';
 import * as packageJson from '../util/package-json';
 import { getCurrentVersion as getCurrentChangelogVersion } from '../util/changelog-helpers';
-import markdownTransformer from '../util/transformers/markdown';
+import markdownFormatter from '../util/formatters/markdown';
 
 export default async (config: ChangelogConfig = {}) => {
   // TODO: Allow loader to be passed in
@@ -19,7 +19,7 @@ export default async (config: ChangelogConfig = {}) => {
   if (newVersion) {
     const { version, metadata, changes } = newVersion;
 
-    const markdown = markdownTransformer(changes, version, metadata);
+    const markdown = markdownFormatter(changes, version, metadata);
 
     await Promise.all([
       changelogMd.prepend(markdown),

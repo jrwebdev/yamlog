@@ -106,6 +106,21 @@ export const bumpVersion = async (
   return undefined;
 };
 
+const getVersionRangeChanges = (
+  changelog: Changelog,
+  from: VersionString,
+  to: VersionString
+) => {
+  const versions = Object.keys(changelog);
+  const versionRange = versions.reduce((acc: Changelog, v) => {
+    if (isInRange(v, from, to)) {
+      acc[v] = changelog[v];
+    }
+    return acc;
+  }, {});
+  return Object.keys(versionRange).length ? versionRange : undefined;
+};
+
 export const getUnreleasedChanges = async (dir: string) => {
   if (dir) return readUnreleasedFiles(dir);
   else {
@@ -117,7 +132,7 @@ export const getUnreleasedChanges = async (dir: string) => {
 export const getChanges = async (
   version?: VersionQuery,
   { unreleasedDir = '' } = {}
-): Promise<Changelog | ChangelogVersion> => {
+): Promise<Changelog | ChangelogVersion | undefined> => {
   if (version && version === 'unreleased') {
     return getUnreleasedChanges(unreleasedDir);
   }
@@ -126,19 +141,14 @@ export const getChanges = async (
   const versions = sort(Object.keys(released));
 
   if (!versions.length) {
-    return {};
+    return undefined;
   } else if (version === 'latest') {
     return { [versions[0]]: released[versions[0]] };
   } else if (typeof version === 'string') {
     return released[version] ? { [version]: released[version] } : {};
   } else if (typeof version === 'object') {
     const { from, to = versions[0] } = version;
-    return versions.reduce((acc: Changelog, v) => {
-      if (isInRange(v, from, to)) {
-        acc[v] = released[v];
-      }
-      return acc;
-    }, {});
+    return getVersionRangeChanges(released, from, to);
   } else {
     return released;
   }
