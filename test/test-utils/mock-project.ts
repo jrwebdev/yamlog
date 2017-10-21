@@ -10,6 +10,9 @@ import { Changelog, ChangeType, Change } from '../../src/types/changelog';
 
 const glob = pify(cbGlob);
 
+const fileTimestamp = (fileNumber: string) =>
+  '0'.repeat(17 - fileNumber.length) + fileNumber;
+
 const createMockProject = () => {
   const setup = (
     changelog?: Changelog,
@@ -32,9 +35,9 @@ const createMockProject = () => {
       let i = 0;
       Object.keys(changeFiles).forEach((type: ChangeType) => {
         changeFiles[type].forEach((change: Change) => {
-          const filename = `.yamlog-unreleased/${type}-${(++i)
-            .toString()
-            .padStart(17, '0')}.yaml`;
+          const filename = `.yamlog-unreleased/${type}-${fileTimestamp(
+            (i++).toString()
+          )}.yaml`;
 
           mockFiles[filename] = format(change);
         });
