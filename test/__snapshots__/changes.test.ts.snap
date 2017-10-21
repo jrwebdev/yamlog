@@ -1,0 +1,311 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return a range of versions 1`] = `
+2.0.0:
+  metadata:
+    date: '2017-01-03'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+1.0.0:
+  metadata:
+    date: '2017-01-02'
+  feature:
+    - Feature 1
+0.2.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should return a single version 1`] = `
+2.0.0:
+  metadata:
+    date: '2017-01-03'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should return a single version in markdown 1`] = `
+## 2.0.0 (2017-01-03)
+### BREAKING CHANGES
+* Breaking Change 1
+### Features
+* Feature 1
+
+`;
+
+exports[`should return a version from a specified version to the latest version 1`] = `
+2.1.0:
+  metadata:
+    date: '2017-01-05'
+  feature:
+    - Feature 1
+    - Feature 2
+  fix:
+    - Fix 1
+2.0.1:
+  metadata:
+    date: '2017-01-04'
+  fix:
+    - Fix 1
+2.0.0:
+  metadata:
+    date: '2017-01-03'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+1.0.0:
+  metadata:
+    date: '2017-01-02'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should return all changes for the project except unreleased 1`] = `
+{
+  "2.1.0": {
+    "metadata": {
+      "date": "2017-01-05"
+    },
+    "feature": [
+      "Feature 1",
+      "Feature 2"
+    ],
+    "fix": [
+      "Fix 1"
+    ]
+  },
+  "2.0.1": {
+    "metadata": {
+      "date": "2017-01-04"
+    },
+    "fix": [
+      "Fix 1"
+    ]
+  },
+  "2.0.0": {
+    "metadata": {
+      "date": "2017-01-03"
+    },
+    "breaking": [
+      "Breaking Change 1"
+    ],
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "1.0.0": {
+    "metadata": {
+      "date": "2017-01-02"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "0.2.0": {
+    "metadata": {
+      "date": "2017-01-01"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "0.1.0": {
+    "metadata": {
+      "date": "2017-01-01"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  }
+}
+`;
+
+exports[`should return changes in JSON 1`] = `
+{
+  "2.1.0": {
+    "metadata": {
+      "date": "2017-01-05"
+    },
+    "feature": [
+      "Feature 1",
+      "Feature 2"
+    ],
+    "fix": [
+      "Fix 1"
+    ]
+  },
+  "2.0.1": {
+    "metadata": {
+      "date": "2017-01-04"
+    },
+    "fix": [
+      "Fix 1"
+    ]
+  },
+  "2.0.0": {
+    "metadata": {
+      "date": "2017-01-03"
+    },
+    "breaking": [
+      "Breaking Change 1"
+    ],
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "1.0.0": {
+    "metadata": {
+      "date": "2017-01-02"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "0.2.0": {
+    "metadata": {
+      "date": "2017-01-01"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  },
+  "0.1.0": {
+    "metadata": {
+      "date": "2017-01-01"
+    },
+    "feature": [
+      "Feature 1"
+    ]
+  }
+}
+`;
+
+exports[`should return changes in Yaml 1`] = `
+2.1.0:
+  metadata:
+    date: '2017-01-05'
+  feature:
+    - Feature 1
+    - Feature 2
+  fix:
+    - Fix 1
+2.0.1:
+  metadata:
+    date: '2017-01-04'
+  fix:
+    - Fix 1
+2.0.0:
+  metadata:
+    date: '2017-01-03'
+  breaking:
+    - Breaking Change 1
+  feature:
+    - Feature 1
+1.0.0:
+  metadata:
+    date: '2017-01-02'
+  feature:
+    - Feature 1
+0.2.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+0.1.0:
+  metadata:
+    date: '2017-01-01'
+  feature:
+    - Feature 1
+
+`;
+
+exports[`should return changes in markdown 1`] = `
+## 2.1.0 (2017-01-05)
+### Features
+* Feature 1
+* Feature 2
+### Fixes
+* Fix 1
+
+## 2.0.1 (2017-01-04)
+### Fixes
+* Fix 1
+
+## 2.0.0 (2017-01-03)
+### BREAKING CHANGES
+* Breaking Change 1
+### Features
+* Feature 1
+
+## 1.0.0 (2017-01-02)
+### Features
+* Feature 1
+
+## 0.2.0 (2017-01-01)
+### Features
+* Feature 1
+
+## 0.1.0 (2017-01-01)
+### Features
+* Feature 1
+
+`;
+
+exports[`should return the latest version 1`] = `
+2.1.0:
+  metadata:
+    date: '2017-01-05'
+  feature:
+    - Feature 1
+    - Feature 2
+  fix:
+    - Fix 1
+
+`;
+
+exports[`should return unreleased changes 1`] = `
+breaking:
+  - Breaking Change 1
+feature:
+  - Feature 1
+  - Feature 2
+fix:
+  - Fix 1
+  - Fix 2
+
+`;
+
+exports[`should return unreleased changes from change files 1`] = `
+breaking:
+  - Breaking 1
+  - Breaking 2
+feature:
+  - Feature 1
+  - Feature 2
+fix:
+  - Fix 1
+  - Fix 2
+
+`;
+
+exports[`should return unreleased changes in markdown 1`] = `
+### BREAKING CHANGES
+* Breaking Change 1
+### Features
+* Feature 1
+* Feature 2
+### Fixes
+* Fix 1
+* Fix 2
+
+`;

@@ -14,6 +14,7 @@
   "scripts": {
     "log": "ts-node src/bin/yamlog",
     "bump": "ts-node src/bin/yamlog bump-version",
+    "changes": "ts-node src/bin/yamlog changes",
     "test": "jest --watch",
     "test:all": "jest --coverage",
     "prebuild": "rimraf dist",

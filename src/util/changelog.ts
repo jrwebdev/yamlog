@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
 import { ChangelogConfig, CurrentVersionLoader } from '../types/config';
-import { VersionString } from '../types/version';
+import { VersionString, VersionQuery } from '../types/version';
 import {
   Changelog,
   ChangeType,
@@ -21,6 +21,7 @@ import {
   read as readChangelog,
   write as writeChangelog,
 } from './changelog-file';
+import { sort, isInRange } from './version';
 
 interface NewVersion {
   version: VersionString;
@@ -103,4 +104,42 @@ export const bumpVersion = async (
   }
 
   return undefined;
+};
+
+export const getUnreleasedChanges = async (dir: string) => {
+  if (dir) return readUnreleasedFiles(dir);
+  else {
+    const { unreleased } = await readChangelog();
+    return unreleased;
+  }
+};
+
+export const getChanges = async (
+  version?: VersionQuery,
+  { unreleasedDir = '' } = {}
+): Promise<Changelog | ChangelogVersion> => {
+  if (version && version === 'unreleased') {
+    return getUnreleasedChanges(unreleasedDir);
+  }
+
+  const { unreleased, ...released } = await readChangelog();
+  const versions = sort(Object.keys(released));
+
+  if (!versions.length) {
+    return {};
+  } else if (version === 'latest') {
+    return { [versions[0]]: released[versions[0]] };
+  } else if (typeof version === 'string') {
+    return released[version] ? { [version]: released[version] } : {};
+  } else if (typeof version === 'object') {
+    const { from, to = versions[0] } = version;
+    return versions.reduce((acc: Changelog, v) => {
+      if (isInRange(v, from, to)) {
+        acc[v] = released[v];
+      }
+      return acc;
+    }, {});
+  } else {
+    return released;
+  }
 };

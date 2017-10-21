@@ -82,3 +82,35 @@ export const bumpMinor = compose(
 );
 
 export const bumpPatch = compose(format, increase('patch'), parse);
+
+const isEqual = (version: VersionString, to: VersionString) => version === to;
+
+const isGreaterThan = (version: VersionString, than: VersionString) => {
+  const v1 = parse(version);
+  const v2 = parse(than);
+  if (!v1 || !v2) return false;
+
+  if (v1.major > v2.major) {
+    return true;
+  } else if (v1.major === v2.major) {
+    if (v1.minor > v2.minor) {
+      return true;
+    } else if (v1.minor === v2.minor) {
+      return v1.patch > v2.patch;
+    }
+  }
+
+  return false;
+};
+
+const isLessThan = (version: VersionString, than: VersionString) =>
+  isGreaterThan(than, version);
+
+export const isInRange = (
+  version: VersionString,
+  from: VersionString,
+  to: VersionString
+) =>
+  isEqual(version, to) ||
+  isEqual(version, from) ||
+  (isGreaterThan(version, from) && isLessThan(version, to));

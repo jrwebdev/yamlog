@@ -16,15 +16,17 @@ const changeTypeHeadingMap: ChangeTypeHeadingMap = {
 };
 
 export default (
-  version: VersionString,
   changes: ChangelogVersion,
+  version?: VersionString,
   metadata?: ChangelogVersionMetadata
 ) => {
   const lines: string[] = [];
 
-  let versionHeader = `## ${version}`;
-  versionHeader += metadata ? ` (${metadata.date})` : '';
-  lines.push(versionHeader);
+  if (version) {
+    let versionHeader = `## ${version}`;
+    versionHeader += metadata ? ` (${metadata.date})` : '';
+    lines.push(versionHeader);
+  }
 
   Object.keys(changeTypeHeadingMap).forEach((changeType: ChangeType) => {
     const changeTypeChanges = changes[changeType];

@@ -19,7 +19,7 @@ export default async (config: ChangelogConfig = {}) => {
   if (newVersion) {
     const { version, metadata, changes } = newVersion;
 
-    const markdown = markdownTransformer(version, changes, metadata);
+    const markdown = markdownTransformer(changes, version, metadata);
 
     await Promise.all([
       changelogMd.prepend(markdown),
