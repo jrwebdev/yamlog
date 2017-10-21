@@ -1,4 +1,6 @@
-unreleased:
+0.0.5:
+  metadata:
+    date: '2017-10-22'
   feature:
     - changes CLI command to output changes to the command line
 0.0.4:
