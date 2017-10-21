@@ -111,7 +111,7 @@ const getVersionRangeChanges = (
   from: VersionString,
   to: VersionString
 ) => {
-  const versions = Object.keys(changelog);
+  const versions = sort(Object.keys(changelog));
   const versionRange = versions.reduce((acc: Changelog, v) => {
     if (isInRange(v, from, to)) {
       acc[v] = changelog[v];
