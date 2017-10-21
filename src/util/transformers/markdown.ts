@@ -22,7 +22,7 @@ export default (version: VersionString, changes: ChangelogVersion) => {
       lines.push(`### ${changeTypeHeadingMap[changeType]}`);
       changeTypeChanges.forEach(change => {
         if (typeof change === 'string') {
-          lines.push(` * ${change}`);
+          lines.push(`* ${change}`);
         } else {
           // TODO: detailed change
         }
