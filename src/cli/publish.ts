@@ -117,6 +117,9 @@ const run = async () => {
       // TODO: Improve error output
       // TODO: Roll back publish on error?
       console.error(err);
+      // TODO: Only reset/remove package.json/changelog.yaml/CHANGELOG.md
+      execa.shellSync('git reset --hard && git clean -f -d');
+      process.exit(1);
     });
 };
 
