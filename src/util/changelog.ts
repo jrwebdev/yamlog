@@ -6,7 +6,7 @@ import { Changelog, ChangeType, Change } from '../types/changelog';
 import {
   addChange as addUnreleasedDirChange,
   read as readUnreleasedFiles,
-  deleteFiles as deleteUnreleasedFiles,
+  removeDir as deleteUnreleasedFiles,
 } from './unreleased-dir';
 import { getNextVersion } from './changelog-helpers';
 import {

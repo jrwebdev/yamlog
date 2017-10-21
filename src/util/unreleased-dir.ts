@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as cbGlob from 'glob';
 import * as pify from 'pify';
-import { mkdirs, emptyDir } from 'fs-extra';
+import { mkdirs, remove } from 'fs-extra';
 
 import { ChangeType, Change, ChangelogVersion } from '../types/changelog';
 import { write as writeYamlFile, read as readYamlFile } from './yaml-file';
@@ -29,7 +29,7 @@ export const addChange = async (
   return writeYamlFile(`${dir}/${filename}`, processChange(change));
 };
 
-export const deleteFiles = (dir = defaultDir) => emptyDir(dir);
+export const removeDir = (dir = defaultDir) => remove(dir);
 
 export const read = async (dir = defaultDir): Promise<ChangelogVersion> => {
   // TODO: Normalise dir path

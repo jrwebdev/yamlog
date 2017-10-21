@@ -1,3 +1,4 @@
+import { existsSync } from 'fs-extra';
 import { createMockProject } from './test-utils';
 
 import bumpVersion from '../src/lib/bump-version';
@@ -135,6 +136,36 @@ it('should ignore the unstable option if the project is already at v1', async ()
   await bumpVersion({ unstable: true });
 });
 
+it('should write the version to package.json', async () => {
+  mockProject.setup({
+    unreleased: {
+      fix: ['Fix 1'],
+    },
+    '1.0.0': {
+      metadata: { date: '2017-01-01' },
+      feature: ['Feature 1'],
+    },
+  });
+
+  await bumpVersion();
+  const packageJson = await mockProject.readPackageJson();
+  expect(packageJson.version).toEqual('1.0.1');
+});
+
+// TODO: Fix
+xit('should read the version from the package.json if there are no releases', async () => {
+  mockProject.setup({
+    unreleased: {
+      fix: ['Fix 1'],
+    },
+  });
+
+  await bumpVersion();
+  const packageJson = await mockProject.readPackageJson();
+  console.log(packageJson.version);
+  expect(packageJson.version).toEqual('0.0.1');
+});
+
 describe('unreleased directory', () => {
   it('should bump a patch version if there is a fix file in the unreleased directory', async () => {
     mockProject.setup(
@@ -186,34 +217,23 @@ describe('unreleased directory', () => {
     );
     await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
   });
-});
 
-it('should write the version to package.json', async () => {
-  mockProject.setup({
-    unreleased: {
-      fix: ['Fix 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
+  it('should remove the unreleased directory on bumping the version', async () => {
+    mockProject.setup(
+      {
+        '1.0.0': {
+          metadata: { date: '2017-01-01' },
+          feature: ['Feature 1'],
+        },
+      },
+      {
+        fix: ['Fix 1'],
+        feature: ['Feature 1'],
+        breaking: ['Breaking Change 1', 'Breaking Change 2'],
+      }
+    );
+    expect(existsSync('.yamlog-unreleased')).toEqual(true);
+    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
+    expect(existsSync('.yamlog-unreleased')).toEqual(false);
   });
-
-  await bumpVersion();
-  const packageJson = await mockProject.readPackageJson();
-  expect(packageJson.version).toEqual('1.0.1');
-});
-
-// TODO: Fix
-xit('should read the version from the package.json if there are no releases', async () => {
-  mockProject.setup({
-    unreleased: {
-      fix: ['Fix 1'],
-    },
-  });
-
-  await bumpVersion();
-  const packageJson = await mockProject.readPackageJson();
-  console.log(packageJson.version);
-  expect(packageJson.version).toEqual('0.0.1');
 });
