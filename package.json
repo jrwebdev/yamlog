@@ -21,6 +21,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "commander": "^2.11.0",
     "fs-extra": "^4.0.2",
     "glob": "^7.1.2",
     "inquirer": "^3.3.0",
@@ -32,6 +33,7 @@
     "yargs": "^9.0.1"
   },
   "devDependencies": {
+    "@types/commander": "^2.11.0",
     "@types/fs-extra": "^4.0.2",
     "@types/glob": "^5.0.33",
     "@types/inquirer": "^0.0.35",

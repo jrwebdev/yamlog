@@ -1,26 +1,40 @@
-import { argv } from 'yargs';
+import * as program from 'commander';
 
 import config from '../util/config';
 import { default as changesLib, ChangesOptions } from '../lib/changes';
 
+program
+  .option('-v, --version [version]', 'The version to display changes for')
+  .option(
+    '--from [from]',
+    'The version to display a range of version change from'
+  )
+  .option(
+    '--to [to]',
+    'The version to display a range of version change to (optional, defaults to latest)'
+  )
+  .option('--latest', 'Display changes for the latest version')
+  .option('--unreleased', 'Display unreleased changes')
+  .option(
+    '--format [format]',
+    'Format to display changes in (yaml/json/markdown). Defaults to yaml',
+    'yaml'
+  )
+  .parse(process.argv);
+
 const run = async () => {
-  // TODO: Validate args
-  const format = argv.format || 'yaml';
+  let options: ChangesOptions = { format: program.format };
 
-  let options: ChangesOptions = { format };
-
-  console.log(argv);
-
-  if (argv.latest) {
+  if (program.latest) {
     options.version = 'latest';
-  } else if (argv.unreleased) {
+  } else if (program.unreleased) {
     options.version = 'unreleased';
-  } else if (argv.version) {
-    options.version = argv.version;
-  } else if (argv.from) {
+  } else if (program.version) {
+    options.version = (program as any).version;
+  } else if (program.from) {
     options.version = {
-      from: argv.from,
-      to: argv.to,
+      from: program.from,
+      to: program.to,
     };
   }
 

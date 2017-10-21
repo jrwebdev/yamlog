@@ -145,7 +145,7 @@ export const getChanges = async (
   } else if (version === 'latest') {
     return { [versions[0]]: released[versions[0]] };
   } else if (typeof version === 'string') {
-    return released[version] ? { [version]: released[version] } : {};
+    return released[version] ? { [version]: released[version] } : undefined;
   } else if (typeof version === 'object') {
     const { from, to = versions[0] } = version;
     return getVersionRangeChanges(released, from, to);
