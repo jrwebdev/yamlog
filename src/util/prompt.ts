@@ -5,7 +5,7 @@ const getDefaultType = (message: string) =>
 
 // TODO: Validation
 
-const prompt = ({ defaultMessage = '', defaultModule = '' } = {}) => {
+const prompt = ({ defaultMessage = '' /*, defaultModule = '' */ } = {}) => {
   const inquirerPrompt = inquirer.createPromptModule();
   return inquirerPrompt([
     {
@@ -15,12 +15,12 @@ const prompt = ({ defaultMessage = '', defaultModule = '' } = {}) => {
       choices: ['fix', 'feature', 'breaking'],
       default: getDefaultType(defaultMessage),
     },
-    {
-      type: 'input',
-      name: 'module',
-      message: 'Which module does this change affect?',
-      default: defaultModule || undefined,
-    },
+    // {
+    //   type: 'input',
+    //   name: 'module',
+    //   message: 'Which module does this change affect?',
+    //   default: defaultModule || undefined,
+    // },
     {
       type: 'input',
       name: 'details',

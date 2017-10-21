@@ -6,7 +6,7 @@ import { existsSync } from 'fs-extra';
 const command = argv._[0] || 'log';
 const commandFile = path.resolve(__dirname, `../cli/${command}`);
 
-if (existsSync(commandFile)) {
+if (existsSync(`${commandFile}.js`) || existsSync(`${commandFile}.ts`)) {
   require(commandFile);
 } else {
   // TODO: Output help
