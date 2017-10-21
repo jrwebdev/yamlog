@@ -1,6 +1,4 @@
 unreleased:
-  metadata:
-    date: '2017-10-22'
   feature:
     - Publish CLI script to bump version and publish changes to npm
 0.0.5:
