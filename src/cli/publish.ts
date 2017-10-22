@@ -20,7 +20,9 @@ interface Task {
 const run = async () => {
   const { publish: publishConfig = {} } = config;
 
-  const tasks: Task[] = [];
+  const copyFiles = publishConfig.copyFiles
+    ? publishConfig.copyFiles
+    : ['package.json', 'LICENSE', 'README.md'];
 
   // TODO: Fix type
   // const newVersion = await bumpVersion(config);
@@ -28,75 +30,61 @@ const run = async () => {
   console.log();
   console.log('yamlog publish');
 
-  tasks.push({
-    title: 'Bumping version',
-    task: async (ctx, task) => {
-      ctx.newVersion = await bumpVersion(config);
-      if (!ctx.newVersion) {
-        task.skip('No new changes found, skipping publish');
-      }
+  const tasks: Task[] = [
+    {
+      title: 'Bumping version',
+      task: async (ctx, task) => {
+        ctx.newVersion = await bumpVersion(config);
+        if (!ctx.newVersion) {
+          task.skip('No new changes found, skipping publish');
+        }
+      },
     },
-  });
-
-  // TODO: Pre-publish
-
-  if (publishConfig.dir) {
-    const copyFiles = publishConfig.copyFiles
-      ? publishConfig.copyFiles
-      : ['package.json', 'LICENSE', 'README.md'];
-
-    if (publishConfig.copyFiles !== false && copyFiles && copyFiles.length) {
-      tasks.push({
-        title: `Copying files to ${publishConfig.dir}/`,
-        enabled: ctx => !!ctx.newVersion,
-        task: async () =>
-          Promise.all(
-            copyFiles.map(async file => {
-              // TODO: Throw error if file not found?
-              if (existsSync(file)) {
-                await copy(file, `dist/${file}`);
-              }
-            })
-          ),
-      });
-    }
-  }
-
-  tasks.push({
-    title: 'Publishing npm package',
-    enabled: ctx => !!ctx.newVersion,
-    task: () =>
-      execa('npm', ['publish'], {
-        cwd: publishConfig.dir || process.cwd(),
-      }),
-  });
-
-  if (publishConfig.commit !== false) {
-    tasks.push({
-      title: 'Committing file changes',
+    {
+      title: `Copying files to ${publishConfig.dir}/`,
+      enabled: ctx =>
+        !!ctx.newVersion &&
+        publishConfig.copyFiles !== false &&
+        copyFiles &&
+        !!copyFiles.length,
+      task: async () =>
+        Promise.all(
+          copyFiles.map(async file => {
+            // TODO: Throw error if file not found?
+            if (existsSync(file)) {
+              await copy(file, `dist/${file}`);
+            }
+          })
+        ),
+    },
+    {
+      title: 'Publishing npm package',
       enabled: ctx => !!ctx.newVersion,
+      task: () =>
+        execa('npm', ['publish'], {
+          cwd: publishConfig.dir || process.cwd(),
+        }),
+    },
+    {
+      title: 'Committing file changes',
+      enabled: ctx => !!ctx.newVersion && publishConfig.commit !== false,
       task: ctx =>
+        // TODO: Add unpublished dir
         execa.shell(
           `git commit package.json changelog.yaml CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
         ),
-    });
-  }
-
-  if (publishConfig.tag !== false) {
-    tasks.push({
+    },
+    {
       title: 'Tagging release',
-      enabled: ctx => !!ctx.newVersion,
+      enabled: ctx => !!ctx.newVersion && publishConfig.tag !== false,
       task: ctx => execa.shell(`git tag v${ctx.newVersion}`),
-    });
-  }
-
-  if (publishConfig.push !== false) {
-    tasks.push({
+    },
+    {
       title: 'Pushing changes to repository',
-      enabled: ctx => !!ctx.newVersion,
+      enabled: ctx => !!ctx.newVersion && publishConfig.push !== false,
       task: () => execa.shell('git push origin && git push --tags origin'),
-    });
-  }
+    },
+  ];
 
   console.log();
   new Listr(tasks)
@@ -118,7 +106,7 @@ const run = async () => {
       // TODO: Improve error output
       // TODO: Roll back publish on error?
       console.error(err);
-      // TODO: Only reset/remove package.json/changelog.yaml/CHANGELOG.md
+      // TODO: Only reset/remove package.json/changelog.yaml/unreleased dir/CHANGELOG.md
       execa.shellSync('git reset --hard && git clean -f -d');
       process.exit(1);
     });
