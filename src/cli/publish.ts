@@ -103,7 +103,9 @@ const run = async () => {
     .run()
     // TODO: Fix type
     .then((ctx: any) => {
-      console.log(`\nv${ctx.newVersion} published successfully\n`);
+      if (ctx.newVersion) {
+        console.log(`\nv${ctx.newVersion} published successfully\n`);
+      }
       // console.log(
       //   `\n ${chalk.bold(
       //     `${lib.packageJson.getName()}@${ctx.newVersion} ${chalk.green(
