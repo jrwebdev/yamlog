@@ -1,3 +1,7 @@
+## 0.0.7 (2017-10-23)
+### Features
+* Commit CLI command
+
 ## 0.0.6 (2017-10-22)
 ### Features
 * Publish CLI script to bump version and publish changes to npm
