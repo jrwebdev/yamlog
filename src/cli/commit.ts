@@ -1,15 +1,16 @@
-import { execSync } from 'child_process';
+import * as execa from 'execa';
 import * as inquirer from 'inquirer';
 import chalk from 'chalk';
 
 import { default as logPrompt } from '../util/prompt';
 import { getArgStr, getMessage, noVerify } from '../util/git';
+import config from '../util/config';
 
 const tick = chalk.bold(chalk.green('✔'));
 const cross = chalk.bold(chalk.red('✘'));
 
 const commit = () =>
-  execSync(`git commit ${getArgStr()} --no-verify`, {
+  execa.shellSync(`git commit ${getArgStr()} --no-verify`, {
     stdio: 'inherit',
   });
 
@@ -43,8 +44,8 @@ prompt([
   if (logRequired) {
     logPrompt({ defaultMessage: getMessage() })
       .then(() => {
-        // TODO: unreleased directory
-        execSync('git add changelog.yaml');
+        const add = config.unreleasedDir || 'changelog.yaml';
+        execa.sync('git', ['add', add]);
         commit();
       })
       .catch((err: any) => {
