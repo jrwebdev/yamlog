@@ -12,6 +12,9 @@
     "unstable": true,
     "publish": {
       "dir": "dist"
+    },
+    "commit": {
+      "cmd": "yarn commit"
     }
   },
   "bin": {
@@ -23,11 +26,13 @@
     "changes": "ts-node src/bin/yamlog changes",
     "test": "jest --watch",
     "test:all": "jest --coverage",
+    "commit": "ts-node src/bin/yamlog commit",
     "prebuild": "rimraf dist",
     "build": "tsc",
     "release": "ts-node src/bin/yamlog publish"
   },
   "dependencies": {
+    "chalk": "^2.2.0",
     "commander": "^2.11.0",
     "execa": "^0.8.0",
     "fs-extra": "^4.0.2",
@@ -38,7 +43,8 @@
     "moment": "^2.19.1",
     "pify": "^3.0.0",
     "ramda": "^0.25.0",
-    "yargs": "^9.0.1"
+    "yargs": "^9.0.1",
+    "yargs-parser": "^8.0.0"
   },
   "devDependencies": {
     "@types/commander": "^2.11.0",

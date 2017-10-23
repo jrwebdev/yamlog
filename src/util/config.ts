@@ -31,6 +31,7 @@ const getConfig = () => {
   config.unstable = userConfig.unstable;
   config.startVersion = userConfig.startVersion;
   config.publish = userConfig.publish || {};
+  config.commit = userConfig.commit || {};
 
   return config;
 };
