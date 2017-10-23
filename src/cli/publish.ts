@@ -13,6 +13,7 @@ interface Task {
   task: (ctx: any, task: any) => Promise<any>;
 }
 
+// TODO: How to prevent merges to master if release is in progress?
 // TODO: Rename to release to avoid conflict with npm publish/yarn publish?
 // TODO: Check branch is master?
 // TODO: Check no changes to be pulled?
@@ -20,18 +21,17 @@ interface Task {
 const run = async () => {
   const { publish: publishConfig = {} } = config;
 
+  // TODO: Check for publish dir
   const copyFiles = publishConfig.copyFiles
     ? publishConfig.copyFiles
     : ['package.json', 'LICENSE', 'README.md'];
-
-  // TODO: Fix type
-  // const newVersion = await bumpVersion(config);
 
   console.log();
   console.log('yamlog publish');
 
   const tasks: Task[] = [
     {
+      // TODO: Option to disable bump
       title: 'Bumping version',
       task: async (ctx, task) => {
         ctx.newVersion = await bumpVersion(config);
@@ -66,6 +66,7 @@ const run = async () => {
         }),
     },
     {
+      // TODO: Only needed if bump is performed
       title: 'Committing file changes',
       enabled: ctx => !!ctx.newVersion && publishConfig.commit !== false,
       task: ctx =>
