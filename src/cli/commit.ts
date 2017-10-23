@@ -14,46 +14,50 @@ const commit = () =>
     stdio: 'inherit',
   });
 
-if (noVerify()) {
-  commit();
-  process.exit();
-}
-
-console.log(chalk.bold('\nDoes this change require a changelog entry?'));
-[
-  ` ${tick} New feature release`,
-  ` ${tick} Fix to a released feature`,
-  ` ${cross} Work-in-progress on an unreleased feature`,
-  ` ${cross} Documentation`,
-  ` ${cross} Internal refactoring`,
-].map(m => console.log(m));
-
-console.log();
-console.log('Multiple changes should be logged separately.');
-console.log();
-
-const prompt = inquirer.createPromptModule();
-prompt([
-  {
-    type: 'confirm',
-    name: 'logRequired',
-    message: 'Changelog entry required?',
-    default: true,
-  },
-]).then(({ logRequired }) => {
-  if (logRequired) {
-    logPrompt({ defaultMessage: getMessage() })
-      .then(() => {
-        const add = config.unreleasedDir || 'changelog.yaml';
-        execa.sync('git', ['add', add]);
-        commit();
-      })
-      .catch((err: any) => {
-        // TODO: Better error handling/validation
-        console.log(err);
-        process.exit(1);
-      });
-  } else {
+const run = () => {
+  if (noVerify()) {
     commit();
+    process.exit();
   }
-});
+
+  [
+    '',
+    chalk.bold('Does this change require a changelog entry?'),
+    ` ${tick} New feature release`,
+    ` ${tick} Fix to a released feature`,
+    ` ${cross} Work-in-progress on an unreleased feature`,
+    ` ${cross} Documentation`,
+    ` ${cross} Internal refactoring`,
+    '',
+    'Multiple changes should be logged separately.',
+    '',
+  ].map(m => console.log(m));
+
+  const prompt = inquirer.createPromptModule();
+  prompt([
+    {
+      type: 'confirm',
+      name: 'logRequired',
+      message: 'Changelog entry required?',
+      default: true,
+    },
+  ]).then(({ logRequired }) => {
+    if (logRequired) {
+      logPrompt({ defaultMessage: getMessage() })
+        .then(() => {
+          const add = config.unreleasedDir || 'changelog.yaml';
+          execa.sync('git', ['add', add]);
+          commit();
+        })
+        .catch((err: any) => {
+          // TODO: Better error handling/validation
+          console.log(err);
+          process.exit(1);
+        });
+    } else {
+      commit();
+    }
+  });
+};
+
+run();
