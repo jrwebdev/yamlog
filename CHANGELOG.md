@@ -1,3 +1,7 @@
+## 0.0.12 (2017-10-25)
+### Features
+* **bump-version** Output module to CHANGELOG.md
+
 ## 0.0.11 (2017-10-25)
 ### Features
 

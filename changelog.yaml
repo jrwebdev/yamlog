@@ -1,4 +1,6 @@
-unreleased:
+0.0.12:
+  metadata:
+    date: '2017-10-25'
   feature:
     - module: bump-version
       details: Output module to CHANGELOG.md
