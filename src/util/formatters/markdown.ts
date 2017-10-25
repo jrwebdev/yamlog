@@ -37,7 +37,8 @@ export default (
         if (typeof change === 'string') {
           lines.push(`* ${change}`);
         } else {
-          // TODO: detailed change
+          // TODO: Check config
+          lines.push(`* **${change.module}** ${change.details}`);
         }
       });
     }
