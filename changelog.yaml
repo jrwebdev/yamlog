@@ -1,4 +1,6 @@
 unreleased:
+  feature:
+    - use-commit CLI command for checking that git commit isn't being used
   fix:
     - Fix commit not adding to changelog
 0.0.7:
