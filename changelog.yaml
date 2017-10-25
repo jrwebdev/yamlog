@@ -1,3 +1,6 @@
+unreleased:
+  fix:
+    - Fix commit not adding to changelog
 0.0.7:
   metadata:
     date: '2017-10-23'

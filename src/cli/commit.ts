@@ -6,6 +6,8 @@ import { default as logPrompt } from '../util/prompt';
 import { getArgStr, getMessage, noVerify } from '../util/git';
 import config from '../util/config';
 
+import log from '../lib/log';
+
 const tick = chalk.bold(chalk.green('✔'));
 const cross = chalk.bold(chalk.red('✘'));
 
@@ -14,7 +16,7 @@ const commit = () =>
     stdio: 'inherit',
   });
 
-const run = () => {
+const run = async () => {
   if (noVerify()) {
     commit();
     process.exit();
@@ -34,30 +36,24 @@ const run = () => {
   ].map(m => console.log(m));
 
   const prompt = inquirer.createPromptModule();
-  prompt([
+  const { logRequired } = await prompt([
     {
       type: 'confirm',
       name: 'logRequired',
       message: 'Changelog entry required?',
       default: true,
     },
-  ]).then(({ logRequired }) => {
-    if (logRequired) {
-      logPrompt({ defaultMessage: getMessage() })
-        .then(() => {
-          const add = config.unreleasedDir || 'changelog.yaml';
-          execa.sync('git', ['add', add]);
-          commit();
-        })
-        .catch((err: any) => {
-          // TODO: Better error handling/validation
-          console.log(err);
-          process.exit(1);
-        });
-    } else {
-      commit();
-    }
-  });
+  ]);
+
+  if (logRequired) {
+    const answers = await logPrompt({ defaultMessage: getMessage() });
+    await log(answers.type, answers.details);
+
+    const add = config.unreleasedDir || 'changelog.yaml';
+    await execa('git', ['add', add]);
+  }
+
+  commit();
 };
 
 run();
