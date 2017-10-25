@@ -1,3 +1,7 @@
+unreleased:
+  feature:
+    - details: Allow module for change to be logged
+      module: log
 0.0.9:
   metadata:
     date: '2017-10-25'
