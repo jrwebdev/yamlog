@@ -83,7 +83,8 @@ const run = async () => {
     {
       title: 'Pushing changes to repository',
       enabled: ctx => !!ctx.newVersion && publishConfig.push !== false,
-      task: () => execa.shell('git push origin && git push --tags origin'),
+      task: () =>
+        execa.shell('git push origin HEAD:master && git push --tags origin'),
     },
   ];
 
