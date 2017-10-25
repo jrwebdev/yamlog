@@ -2,6 +2,8 @@ import * as execa from 'execa';
 import * as inquirer from 'inquirer';
 import chalk from 'chalk';
 
+import { Change } from '../types/changelog';
+
 import { default as logPrompt } from '../util/prompt';
 import { getArgStr, getMessage, noVerify } from '../util/git';
 import config from '../util/config';
@@ -46,8 +48,10 @@ const run = async () => {
   ]);
 
   if (logRequired) {
-    const answers = await logPrompt({ defaultMessage: getMessage() });
-    await log(answers.type, answers.details);
+    const { type, ...change } = await logPrompt({
+      defaultMessage: getMessage(),
+    });
+    await log(type, change as Change);
 
     const add = config.unreleasedDir || 'changelog.yaml';
     await execa('git', ['add', add]);
