@@ -9,8 +9,5 @@ script:
   - yarn build
   - yarn test:all
   - yarn release
-deploy:
-  provider: npm
-  email: web@jravenscroft.co.uk
-  api_key:
-    secure: RFKzO4wgtoDXWiZjQqI7QoXz9Pefgnagip1qjUY9G20m799eiRH6a6hM7ON3tlT57KSnbYeO1jh4+3oY8Gq1jYyj0yb7553H08eyOtmNvpkxsUyMJLSvsfJdybZ+6g6otdbZhSmEApyo4tU8P1oyNcwm9NjK0mAohOWMj/y8NgFZq8vR9RcEAaxaGIUVmRIewIsVE3dXrt1e/CQb0McMSNaeyhRsHBooBvTP0xVNxK+vAjtzogaBFpQeSLq7jp4IZi2cDKjDWPzdz/S02igXt62Rw7CcNrV5I7QTKPCY8az5i8uFguZBMwlWkDz8kwIGmybgRUYlJ9jaR/x4HjmWsgM++dpWwxqG9Apj/zQYHgbVfCvn6LDvRDWDvNcglgbr6R5xpshZmkhLyMZa/mQC2Srv0NwXvChDopBxt3UmLCclm2RSPdzjqgkGVUgwKY+LtlA4UE8MeH+B/CCjJY6pLrw3X7Ft/d2g9nPjfw8KccNpxDSV7mb791U5lKF2PBBpLM1kic6vI39NTf/MRKyZb1x48AweT3caoTGIlZEQYb3eow1Vh8R0WIaV1yhkfSDs4UfnVosn2goXwcTreQX8unVh3M/RIg7Y/NiqzL3M7qFWmnzCaW+A2AV9qxKU+fduu3LdqPVWRUzwwU/JgELkvHrldrI/BtCxW5CvYubakEw=
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
