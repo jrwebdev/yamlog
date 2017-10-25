@@ -1,3 +1,6 @@
+## 0.0.10 (2017-10-25)
+### Features
+
 ## 0.0.9 (2017-10-25)
 ### Fixes
 * Fix publish git push for travis ci
