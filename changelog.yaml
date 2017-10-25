@@ -1,4 +1,6 @@
-unreleased:
+0.0.11:
+  metadata:
+    date: '2017-10-25'
   feature:
     - module: commit
       details: Log module from commit
