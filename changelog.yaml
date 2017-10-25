@@ -5,6 +5,9 @@
     - module: bump-version
       details: Output module to CHANGELOG.md
       logAnother: false
+  fix:
+    - module: commit
+      details: Do not add logAnother to changelog
 0.0.11:
   metadata:
     date: '2017-10-25'

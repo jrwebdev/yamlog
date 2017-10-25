@@ -48,7 +48,7 @@ const run = async () => {
   ]);
 
   if (logRequired) {
-    const { type, ...change } = await logPrompt({
+    const { type, logAnother, ...change } = await logPrompt({
       defaultMessage: getMessage(),
     });
     await log(type, change as Change);
