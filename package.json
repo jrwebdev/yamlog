@@ -1,6 +1,6 @@
 {
   "name": "yamlog",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "index.js",
   "repository": "git@github.com:jrwebdev/yamlog.git",
   "author": "jrwebdev <web@jravenscroft.co.uk>",

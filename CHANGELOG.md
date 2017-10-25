@@ -1,3 +1,7 @@
+## 0.0.9 (2017-10-25)
+### Fixes
+* Fix publish git push for travis ci
+
 ## 0.0.8 (2017-10-25)
 ### Features
 * use-commit CLI command for checking that git commit isn't being used

@@ -1,4 +1,6 @@
-unreleased:
+0.0.9:
+  metadata:
+    date: '2017-10-25'
   fix:
     - Fix publish git push for travis ci
 0.0.8:
