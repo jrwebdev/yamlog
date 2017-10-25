@@ -1,4 +1,6 @@
-unreleased:
+0.0.8:
+  metadata:
+    date: '2017-10-25'
   feature:
     - use-commit CLI command for checking that git commit isn't being used
   fix:

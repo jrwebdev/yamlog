@@ -1,3 +1,9 @@
+## 0.0.8 (2017-10-25)
+### Features
+* use-commit CLI command for checking that git commit isn't being used
+### Fixes
+* Fix commit not adding to changelog
+
 ## 0.0.7 (2017-10-23)
 ### Features
 * Commit CLI command
