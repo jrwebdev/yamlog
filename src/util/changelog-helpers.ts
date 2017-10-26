@@ -1,9 +1,12 @@
+import { compose } from 'ramda';
+
 import { ChangelogConfig } from '../types/config';
 import {
   Changelog,
   ChangelogVersion,
   ChangeType,
   Change,
+  DetailedChange,
 } from '../types/changelog';
 import { VersionString } from '../types/version';
 import { sort, isUnstable, bumpMajor, bumpMinor, bumpPatch } from './version';
@@ -46,12 +49,30 @@ const stripEmptyChangeTypes = (version: ChangelogVersion) =>
     { ...version }
   );
 
-export const processChange = (change: Change) =>
+const flattenDetails = (change: Change) =>
   typeof change !== 'string' &&
   Object.keys(change).length === 1 &&
   change.details
     ? change.details
     : change;
+
+const stripEmptyChangeProperties = (change: Change): Change =>
+  typeof change === 'string'
+    ? change
+    : Object.keys(
+        change
+      ).reduce((acc: DetailedChange, property: keyof DetailedChange) => {
+        const value = change[property];
+        if (value && value.trim()) {
+          acc[property] = value;
+        }
+        return acc;
+      }, {}) as DetailedChange;
+
+export const processChange = compose(
+  flattenDetails,
+  stripEmptyChangeProperties
+);
 
 export const addChangeToVersionChangeType = (
   type: ChangeType,

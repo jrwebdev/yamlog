@@ -1,124 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`changelog should add a breaking change 1`] = `
-unreleased:
-  breaking:
-    - Breaking Change 1
-  feature:
-    - Feature 1
-  fix:
-    - Fix 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
+exports[`should write a change with a module specified 1`] = `
+details: Feature 1
+module: a-module
 
 `;
 
-exports[`changelog should add a change to an existing unreleased section 1`] = `
-unreleased:
-  feature:
-    - Feature 2
-    - Feature 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
-
-`;
-
-exports[`changelog should add a feature 1`] = `
-unreleased:
-  feature:
-    - Feature 1
-  fix:
-    - Fix 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
-
-`;
-
-exports[`changelog should add a fix 1`] = `
-unreleased:
-  fix:
-    - Fix 2
-    - Fix 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
-
-`;
-
-exports[`changelog should create a new changelog.yaml file and add a change 1`] = `
-unreleased:
-  fix:
-    - Fix 1
-
-`;
-
-exports[`changelog should create a new unreleased section and add a change 1`] = `
-unreleased:
-  fix:
-    - Fix 1
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
-
-`;
-
-exports[`unreleased directory (change file contents) 1`] = `
-Fix 1
-
-`;
-
-exports[`unreleased directory (change file contents) 2`] = `
-Feature 1
-
-`;
-
-exports[`unreleased directory (change file contents) 3`] = `
+exports[`should write a file for a breaking change 1`] = `
 Breaking Change 1
 
 `;
 
-exports[`unreleased directory (change file filename) 1`] = `.yamlog-unreleased/fix-20170520140000000.yaml`;
-
-exports[`unreleased directory (change file filename) 2`] = `.yamlog-unreleased/feature-20170520140000000.yaml`;
-
-exports[`unreleased directory (change file filename) 3`] = `.yamlog-unreleased/breaking-20170520140000000.yaml`;
-
-exports[`unreleased directory (changelog) 1`] = `
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
+exports[`should write a file for a feature 1`] = `
+Feature 2
 
 `;
 
-exports[`unreleased directory (changelog) 2`] = `
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
+exports[`should write a file for a fix 1`] = `
+Fix 1
 
 `;
 
-exports[`unreleased directory (changelog) 3`] = `
-1.0.0:
-  metadata:
-    date: '2017-01-01'
-  feature:
-    - Feature 1
+exports[`should write the details only if a module is not specified 1`] = `
+Feature 1
 
 `;

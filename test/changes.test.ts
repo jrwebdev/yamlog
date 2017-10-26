@@ -120,10 +120,7 @@ it('should return unreleased changes from change files', async () => {
     }
   );
 
-  const c = await changes(
-    { format: 'yaml', version: 'unreleased' },
-    { unreleasedDir: '.yamlog-unreleased' }
-  );
+  const c = await changes({ format: 'yaml', version: 'unreleased' });
   testSnapshot(c);
 });
 

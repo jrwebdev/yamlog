@@ -19,15 +19,7 @@ const createMockProject = () => {
     changeFiles?: { [type in ChangeType]: Change[] },
     mockFiles: { [filename: string]: any } = {}
   ) => {
-    // const mockFiles: any = {};
-
     mockDate.set('2017-05-20 14:00');
-
-    mockFiles['package.json'] =
-      mockFiles['package.json'] ||
-      JSON.stringify({
-        version: '0.0.0',
-      });
 
     if (changelog) {
       mockFiles['changelog.yaml'] = format(changelog);
@@ -37,7 +29,7 @@ const createMockProject = () => {
       let i = 0;
       Object.keys(changeFiles).forEach((type: ChangeType) => {
         changeFiles[type].forEach((change: Change) => {
-          const filename = `.yamlog-unreleased/${type}-${fileTimestamp(
+          const filename = `.yamlog/unreleased/${type}-${fileTimestamp(
             (i++).toString()
           )}.yaml`;
 
@@ -46,7 +38,12 @@ const createMockProject = () => {
       });
     }
 
-    // TODO: Config
+    mockFiles['package.json'] =
+      mockFiles['package.json'] ||
+      JSON.stringify({
+        version: '0.0.0',
+      });
+
     mockFs(mockFiles);
   };
 
@@ -61,7 +58,7 @@ const createMockProject = () => {
   };
 
   const readChangeFile = async () => {
-    const changeFiles = await glob('.yamlog-unreleased/*.*');
+    const changeFiles = await glob('.yamlog/unreleased/*.*');
     const contents = await fs.readFile(changeFiles[0]);
     return {
       filename: changeFiles[0],
