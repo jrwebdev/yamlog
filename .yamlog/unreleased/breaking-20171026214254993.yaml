@@ -1,0 +1,3 @@
+>-
+  Move changelog.yaml to .yamlog/changelog.yaml, remove unreleased section from
+  changelog and always log changes to unreleased directory
