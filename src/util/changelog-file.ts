@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { existsSync } from 'fs-extra';
+import { existsSync, ensureFile } from 'fs-extra';
 import { ChangeType, Change, Changelog } from '../types/changelog';
 import { read as readYamlFile, write as writeYamlFile } from './yaml-file';
 
@@ -8,20 +8,17 @@ import {
   updateVersionChangeTypeEntries,
 } from './changelog-helpers';
 
-const defaultChangelogFilename = 'changelog.yaml';
-
-const getChangelogFile = () => defaultChangelogFilename;
+const defaultChangelogFilename = '.yamlog/changelog.yaml';
 
 export const read = async () => {
-  const changelogFile = getChangelogFile();
-  return existsSync(path.resolve(process.cwd(), changelogFile))
-    ? (await readYamlFile(changelogFile)) as Changelog
+  return existsSync(path.resolve(process.cwd(), defaultChangelogFilename))
+    ? (await readYamlFile(defaultChangelogFilename)) as Changelog
     : {};
 };
 
-export const write = (changelog: Changelog) => {
-  const changelogFile = getChangelogFile();
-  return writeYamlFile(changelogFile, changelog);
+export const write = async (changelog: Changelog) => {
+  await ensureFile(defaultChangelogFilename);
+  return writeYamlFile(defaultChangelogFilename, changelog);
 };
 
 export const addChange = async (type: ChangeType, change: Change) => {
