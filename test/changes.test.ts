@@ -9,11 +9,6 @@ let mockChangelog: Changelog;
 
 beforeEach(() => {
   mockChangelog = {
-    unreleased: {
-      breaking: ['Breaking Change 1'],
-      feature: ['Feature 1', 'Feature 2'],
-      fix: ['Fix 1', 'Fix 2'],
-    },
     '2.1.0': {
       metadata: { date: '2017-01-05' },
       feature: ['Feature 1', 'Feature 2'],
@@ -42,8 +37,14 @@ beforeEach(() => {
     },
   };
 
+  const mockChangeFiles = {
+    breaking: ['Breaking Change 1'],
+    feature: ['Feature 1', 'Feature 2'],
+    fix: ['Fix 1', 'Fix 2'],
+  };
+
   mockProject = createMockProject();
-  mockProject.setup(mockChangelog);
+  mockProject.setup(mockChangelog, mockChangeFiles);
   expect.hasAssertions();
 });
 
@@ -98,29 +99,8 @@ it('should return unreleased changes', async () => {
   testSnapshot(c);
 });
 
-// TODO: Fix
 it('should return unreleased changes in markdown', async () => {
   const c = await changes({ format: 'markdown', version: 'unreleased' });
-  testSnapshot(c);
-});
-
-it('should return unreleased changes from change files', async () => {
-  mockProject = createMockProject();
-  mockProject.setup(
-    {
-      '0.1.0': {
-        metadata: { date: '2017-01-01' },
-        feature: ['Feature 1'],
-      },
-    },
-    {
-      breaking: ['Breaking 1', 'Breaking 2'],
-      feature: ['Feature 1', 'Feature 2'],
-      fix: ['Fix 1', 'Fix 2'],
-    }
-  );
-
-  const c = await changes({ format: 'yaml', version: 'unreleased' });
   testSnapshot(c);
 });
 
@@ -139,9 +119,6 @@ it('should return a range of versions', async () => {
 
 it('should filter and sort versions correctly when returning a range', async () => {
   mockChangelog = {
-    unreleased: {
-      fix: ['Fix 1'],
-    },
     '10.0.0': {
       metadata: { date: '2017-01-01' },
       fix: ['Fix 1'],

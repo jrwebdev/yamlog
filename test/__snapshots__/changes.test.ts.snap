@@ -285,19 +285,6 @@ fix:
 
 `;
 
-exports[`should return unreleased changes from change files 1`] = `
-breaking:
-  - Breaking 1
-  - Breaking 2
-feature:
-  - Feature 1
-  - Feature 2
-fix:
-  - Fix 1
-  - Fix 2
-
-`;
-
 exports[`should return unreleased changes in markdown 1`] = `
 ### BREAKING CHANGES
 * Breaking Change 1

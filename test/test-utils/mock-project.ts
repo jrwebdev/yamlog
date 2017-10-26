@@ -22,7 +22,7 @@ const createMockProject = () => {
     mockDate.set('2017-05-20 14:00');
 
     if (changelog) {
-      mockFiles['changelog.yaml'] = format(changelog);
+      mockFiles['.yamlog/changelog.yaml'] = format(changelog);
     }
 
     if (changeFiles && Object.keys(changeFiles).length) {
@@ -53,7 +53,7 @@ const createMockProject = () => {
   };
 
   const readChangelog = async () => {
-    const contents = await fs.readFile('changelog.yaml');
+    const contents = await fs.readFile('.yamlog/changelog.yaml');
     return contents.toString();
   };
 

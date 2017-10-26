@@ -116,7 +116,7 @@ export const getChanges = async (
     return getUnreleasedChanges(unreleasedDir);
   }
 
-  const { unreleased, ...released } = await readChangelog();
+  const released = await readChangelog();
   const versions = sort(Object.keys(released));
 
   if (!versions.length) {
