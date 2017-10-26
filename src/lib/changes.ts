@@ -1,4 +1,3 @@
-import { ChangelogConfig } from '../types/config';
 import { Changelog, ChangelogVersion } from '../types/changelog';
 import { VersionQuery } from '../types/version';
 
@@ -27,13 +26,8 @@ const formatMarkdown = (versions: Changelog | ChangelogVersion) =>
         })
         .join('\n');
 
-export default async (
-  options: ChangesOptions = {},
-  config: ChangelogConfig = {}
-) => {
-  const changes = await changelog.getChanges(options.version, {
-    unreleasedDir: config.unreleasedDir || '',
-  });
+export default async (options: ChangesOptions = {}) => {
+  const changes = await changelog.getChanges(options.version);
 
   if (!changes) {
     return '';

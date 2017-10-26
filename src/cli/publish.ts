@@ -72,7 +72,7 @@ const run = async () => {
       task: ctx =>
         // TODO: Add unpublished dir
         execa.shell(
-          `git commit package.json changelog.yaml CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
+          `git commit .yamlog package.json CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
         ),
     },
     {

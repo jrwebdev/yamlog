@@ -17,7 +17,6 @@ import {
 } from './unreleased-dir';
 import { getNextVersion } from './changelog-helpers';
 import {
-  addChange as addChangelogChange,
   read as readChangelog,
   write as writeChangelog,
 } from './changelog-file';
@@ -46,28 +45,15 @@ const loadCurrentVersion = async (
   }
 };
 
-export const addChange = (
-  changeType: ChangeType,
-  change: Change,
-  { unreleasedDir = '' } = {}
-) =>
-  unreleasedDir
-    ? addUnreleasedDirChange(changeType, change, unreleasedDir)
-    : addChangelogChange(changeType, change);
+export const addChange = (changeType: ChangeType, change: Change) =>
+  addUnreleasedDirChange(changeType, change);
 
 export const bumpVersion = async (
   currentVersionLoader: CurrentVersionLoader,
   config: ChangelogConfig = {}
 ) => {
-  const {
-    unreleased: changelogUnreleased,
-    ...released,
-  } = await readChangelog();
-
-  // TODO: Combine?
-  const changes = config.unreleasedDir
-    ? await readUnreleasedFiles(config.unreleasedDir)
-    : changelogUnreleased;
+  const released = await readChangelog();
+  const changes = await readUnreleasedFiles();
 
   if (changes && Object.keys(changes).length) {
     const currentVersion = await loadCurrentVersion(
@@ -89,9 +75,7 @@ export const bumpVersion = async (
         ...released,
       });
 
-      if (config.unreleasedDir) {
-        await deleteUnreleasedFiles(config.unreleasedDir);
-      }
+      await deleteUnreleasedFiles();
 
       const newVersion: NewVersion = {
         version,
@@ -121,13 +105,8 @@ const getVersionRangeChanges = (
   return Object.keys(versionRange).length ? versionRange : undefined;
 };
 
-export const getUnreleasedChanges = async (dir: string) => {
-  if (dir) return readUnreleasedFiles(dir);
-  else {
-    const { unreleased } = await readChangelog();
-    return unreleased;
-  }
-};
+export const getUnreleasedChanges = async (_dir: string) =>
+  readUnreleasedFiles();
 
 export const getChanges = async (
   version?: VersionQuery,

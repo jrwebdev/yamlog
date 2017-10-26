@@ -10,7 +10,7 @@ import {
   sortVersionChangeTypeEntries,
 } from './changelog-helpers';
 
-const defaultDir = '.yamlog-unreleased';
+const defaultDir = '.yamlog/unreleased';
 
 const glob = pify(cbGlob);
 
@@ -19,21 +19,19 @@ const getType = (filename: string) => {
   return match ? match[1] as ChangeType : undefined;
 };
 
-export const addChange = async (
-  type: ChangeType,
-  change: Change,
-  dir = defaultDir
-) => {
-  await mkdirs(dir);
+export const addChange = async (type: ChangeType, change: Change) => {
+  await mkdirs(defaultDir);
   const filename = `${type}-${moment().format('YYYYMMDDHHmmssSSS')}.yaml`;
-  return writeYamlFile(`${dir}/${filename}`, processChange(change));
+  return writeYamlFile(`${defaultDir}/${filename}`, processChange(change));
 };
 
-export const removeDir = (dir = defaultDir) => remove(dir);
+export const removeDir = () => remove(defaultDir);
 
-export const read = async (dir = defaultDir): Promise<ChangelogVersion> => {
+export const read = async (): Promise<ChangelogVersion> => {
   // TODO: Normalise dir path
-  const files: string[] = await glob(`${dir}/+(breaking|feature|fix)-*.yaml`);
+  const files: string[] = await glob(
+    `${defaultDir}/+(breaking|feature|fix)-*.yaml`
+  );
   if (files && files.length) {
     const reads = files.map(async file => {
       const type = getType(file);

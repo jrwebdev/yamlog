@@ -21,13 +21,6 @@ const getConfig = () => {
   userConfig = userConfig || {};
   config = {};
 
-  if (userConfig.unreleasedDir) {
-    config.unreleasedDir =
-      userConfig.unreleasedDir === true
-        ? '.yamlog-unreleased'
-        : userConfig.unreleasedDir;
-  }
-
   config.unstable = userConfig.unstable;
   config.startVersion = userConfig.startVersion;
   config.publish = userConfig.publish || {};

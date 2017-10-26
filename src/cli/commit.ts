@@ -6,7 +6,6 @@ import { Change } from '../types/changelog';
 
 import { default as logPrompt } from '../util/prompt';
 import { getArgStr, getMessage, noVerify } from '../util/git';
-import config from '../util/config';
 
 import log from '../lib/log';
 
@@ -52,9 +51,7 @@ const run = async () => {
       defaultMessage: getMessage(),
     });
     await log(type, change as Change);
-
-    const add = config.unreleasedDir || 'changelog.yaml';
-    await execa('git', ['add', add]);
+    await execa('git', ['add', '.yamlog']);
   }
 
   commit();

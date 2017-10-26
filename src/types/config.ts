@@ -11,7 +11,6 @@ export type CurrentVersionLoader =
 
 export interface ChangelogConfig {
   unstable?: boolean;
-  unreleasedDir?: string;
   startVersion?: string;
   // currentVersionLoader?: CurrentVersionLoader;
 }

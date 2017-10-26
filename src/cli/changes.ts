@@ -1,6 +1,5 @@
 import * as program from 'commander';
 
-import config from '../util/config';
 import { default as changesLib, ChangesOptions } from '../lib/changes';
 
 program
@@ -38,7 +37,7 @@ const run = async () => {
     };
   }
 
-  const changes = await changesLib(options, config);
+  const changes = await changesLib(options);
   console.log(changes);
 };
 
