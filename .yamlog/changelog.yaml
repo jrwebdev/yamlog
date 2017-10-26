@@ -1,3 +1,10 @@
+0.1.0:
+  metadata:
+    date: '2017-10-26'
+  breaking:
+    - >-
+      Move changelog.yaml to .yamlog/changelog.yaml, remove unreleased section
+      from changelog and always log changes to unreleased directory
 0.0.12:
   metadata:
     date: '2017-10-25'

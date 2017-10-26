@@ -1,3 +1,7 @@
+## 0.1.0 (2017-10-26)
+### BREAKING CHANGES
+* Move changelog.yaml to .yamlog/changelog.yaml, remove unreleased section from changelog and always log changes to unreleased directory
+
 ## 0.0.12 (2017-10-25)
 ### Features
 * **bump-version** Output module to CHANGELOG.md
