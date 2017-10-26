@@ -28,15 +28,17 @@ it('should leave the changelog unchanged if there are no unreleased changes', as
 });
 
 it('should bump a patch version if there are unreleased fixes', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       fix: ['Fix 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion();
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -44,16 +46,18 @@ it('should bump a patch version if there are unreleased fixes', async () => {
 });
 
 it('should bump a minor version if there are unreleased features', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       feature: ['Feature 1'],
       fix: ['Fix 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion();
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -61,17 +65,19 @@ it('should bump a minor version if there are unreleased features', async () => {
 });
 
 it('should bump a major version if there are unreleased breaking changes', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       breaking: ['Breaking Change 1'],
       feature: ['Feature 1'],
       fix: ['Fix 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion();
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -79,15 +85,17 @@ it('should bump a major version if there are unreleased breaking changes', async
 });
 
 it('should bump a patch version if there are unreleased fixes for an unstable project', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '0.1.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       fix: ['Fix 1'],
-    },
-    '0.1.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion({ unstable: true });
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -95,16 +103,18 @@ it('should bump a patch version if there are unreleased fixes for an unstable pr
 });
 
 it('should bump a patch version if there are unreleased features for an unstable project', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '0.1.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       feature: ['Feature 1'],
       fix: ['Fix 1'],
-    },
-    '0.1.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion({ unstable: true });
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -112,17 +122,19 @@ it('should bump a patch version if there are unreleased features for an unstable
 });
 
 it('should bump a minor version if there are unreleased fixes for an unstable project', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '0.1.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       breaking: ['Breaking Change 1'],
       feature: ['Feature 1'],
       fix: ['Fix 1'],
-    },
-    '0.1.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion({ unstable: true });
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -130,15 +142,17 @@ it('should bump a minor version if there are unreleased fixes for an unstable pr
 });
 
 it('should bump to v1 regardless of change type if an unstable project is now stable', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '0.1.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       fix: ['Fix 1'],
-    },
-    '0.1.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion();
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -146,15 +160,17 @@ it('should bump to v1 regardless of change type if an unstable project is now st
 });
 
 it('should ignore the unstable option if the project is already at v1', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       breaking: ['Breaking Change 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
   await bumpVersion({ unstable: true });
   const changelog = await mockProject.readChangelog();
   mockProject.teardown();
@@ -162,30 +178,29 @@ it('should ignore the unstable option if the project is already at v1', async ()
 });
 
 it('should write the version to package.json', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {
+      '1.0.0': {
+        metadata: { date: '2017-01-01' },
+        feature: ['Feature 1'],
+      },
+    },
+    {
       fix: ['Fix 1'],
-    },
-    '1.0.0': {
-      metadata: { date: '2017-01-01' },
-      feature: ['Feature 1'],
-    },
-  });
+    }
+  );
 
   await bumpVersion();
   const packageJson = await mockProject.readPackageJson();
   expect(packageJson.version).toEqual('1.0.1');
 });
 
-// TODO: Fix
 it('should read the version from the package.json if there are no releases', async () => {
   mockProject.setup(
-    {
-      unreleased: {
-        fix: ['Fix 1'],
-      },
-    },
     {},
+    {
+      fix: ['Fix 1'],
+    },
     {
       'package.json': JSON.stringify({ version: '5.1.4' }),
     }
@@ -197,12 +212,13 @@ it('should read the version from the package.json if there are no releases', asy
 });
 
 it('should write a CHANGELOG.md file', async () => {
-  mockProject.setup({
-    unreleased: {
+  mockProject.setup(
+    {},
+    {
       feature: ['Feature 1', 'Feature 2'],
       fix: ['Fix 1', 'Fix 2'],
-    },
-  });
+    }
+  );
 
   await bumpVersion();
   const changelogMd = await readFile('CHANGELOG.md');
@@ -213,17 +229,16 @@ it('should write a CHANGELOG.md file', async () => {
 it('should add to an existing CHANGELOG.md file', async () => {
   mockProject.setup(
     {
-      unreleased: {
-        feature: ['Feature 1', 'Feature 2'],
-        fix: ['Fix 1'],
-        breaking: ['Breaking Change 1'],
-      },
       '1.0.0': {
         metadata: { date: '2017-01-01' },
         feature: ['Feature 1'],
       },
     },
-    {},
+    {
+      feature: ['Feature 1', 'Feature 2'],
+      fix: ['Fix 1'],
+      breaking: ['Breaking Change 1'],
+    },
     {
       'CHANGELOG.md': [
         '## 1.0.0 (2017-01-01)',
@@ -238,85 +253,4 @@ it('should add to an existing CHANGELOG.md file', async () => {
   const changelogMd = await readFile('CHANGELOG.md');
   mockProject.teardown();
   expect(changelogMd.toString()).toMatchSnapshot();
-});
-
-describe('unreleased directory', () => {
-  it('should bump a patch version if there is a fix file in the unreleased directory', async () => {
-    mockProject.setup(
-      {
-        '1.0.0': {
-          metadata: { date: '2017-01-01' },
-          feature: ['Feature 1'],
-        },
-      },
-      {
-        breaking: [],
-        feature: [],
-        fix: ['Fix 1', 'Fix 2'],
-      }
-    );
-    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
-    const changelog = await mockProject.readChangelog();
-    mockProject.teardown();
-    expect(changelog).toMatchSnapshot();
-  });
-
-  it('should bump a minor version if there is a feature file in the unreleased directory', async () => {
-    mockProject.setup(
-      {
-        '1.0.0': {
-          metadata: { date: '2017-01-01' },
-          feature: ['Feature 1'],
-        },
-      },
-      {
-        breaking: [],
-        fix: ['Fix 1'],
-        feature: ['Feature 1', 'Feature 2', 'Feature 3'],
-      }
-    );
-    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
-    const changelog = await mockProject.readChangelog();
-    mockProject.teardown();
-    expect(changelog).toMatchSnapshot();
-  });
-
-  it('should bump a breaking version if there is a breaking file in the unreleased directory', async () => {
-    mockProject.setup(
-      {
-        '1.0.0': {
-          metadata: { date: '2017-01-01' },
-          feature: ['Feature 1'],
-        },
-      },
-      {
-        fix: ['Fix 1'],
-        feature: ['Feature 1'],
-        breaking: ['Breaking Change 1', 'Breaking Change 2'],
-      }
-    );
-    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
-    const changelog = await mockProject.readChangelog();
-    mockProject.teardown();
-    expect(changelog).toMatchSnapshot();
-  });
-
-  it('should remove the unreleased directory on bumping the version', async () => {
-    mockProject.setup(
-      {
-        '1.0.0': {
-          metadata: { date: '2017-01-01' },
-          feature: ['Feature 1'],
-        },
-      },
-      {
-        fix: ['Fix 1'],
-        feature: ['Feature 1'],
-        breaking: ['Breaking Change 1', 'Breaking Change 2'],
-      }
-    );
-    expect(existsSync('.yamlog-unreleased')).toEqual(true);
-    await bumpVersion({ unreleasedDir: '.yamlog-unreleased' });
-    expect(existsSync('.yamlog-unreleased')).toEqual(false);
-  });
 });
