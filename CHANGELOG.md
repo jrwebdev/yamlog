@@ -1,3 +1,7 @@
+## 0.1.1 (2017-10-28)
+### Features
+* **publish** Check branch is master and up-to-date before publishing
+
 ## 0.1.0 (2017-10-26)
 ### BREAKING CHANGES
 * Move changelog.yaml to .yamlog/changelog.yaml, remove unreleased section from changelog and always log changes to unreleased directory
