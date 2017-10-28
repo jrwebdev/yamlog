@@ -1,3 +1,7 @@
+## 0.1.3 (2017-10-28)
+### Features
+* **log** Allow module input question to be disabled
+
 ## 0.1.2 (2017-10-28)
 ### Fixes
 * **commit** Fix multiple changes not being logged on commit
