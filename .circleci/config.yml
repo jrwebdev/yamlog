@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore:
+        - /v[0-9]+\.[0-9]+\.[0-9]+/
     docker:
       - image: circleci/node:6.11
     working_directory: ~/repo
