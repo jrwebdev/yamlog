@@ -1,0 +1,2 @@
+module: commit
+details: Fix multiple changes not being logged on commit

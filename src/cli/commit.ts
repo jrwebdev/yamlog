@@ -17,6 +17,21 @@ const commit = () =>
     stdio: 'inherit',
   });
 
+interface LogDefaults {
+  message?: string;
+}
+
+const runLog = async (defaults: LogDefaults = {}) => {
+  const { type, logAnother, ...change } = await logPrompt({
+    defaultMessage: defaults.message || '',
+  });
+  await log(type, change as Change);
+  if (logAnother) {
+    console.log('--------------------------');
+    await runLog();
+  }
+};
+
 const run = async () => {
   if (noVerify()) {
     commit();
@@ -47,10 +62,7 @@ const run = async () => {
   ]);
 
   if (logRequired) {
-    const { type, logAnother, ...change } = await logPrompt({
-      defaultMessage: getMessage(),
-    });
-    await log(type, change as Change);
+    await runLog({ message: getMessage() });
     await execa('git', ['add', '.yamlog']);
   }
 
