@@ -1,3 +1,7 @@
+## 0.1.2 (2017-10-28)
+### Fixes
+* **commit** Fix multiple changes not being logged on commit
+
 ## 0.1.1 (2017-10-28)
 ### Features
 * **publish** Check branch is master and up-to-date before publishing

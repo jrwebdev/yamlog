@@ -1,3 +1,9 @@
+0.1.2:
+  metadata:
+    date: '2017-10-28'
+  fix:
+    - module: commit
+      details: Fix multiple changes not being logged on commit
 0.1.1:
   metadata:
     date: '2017-10-28'
