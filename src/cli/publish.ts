@@ -49,7 +49,7 @@ const run = async () => {
     {
       title: 'Checking branch is up-to-date',
       enabled,
-      task: async (_ctx, _task) => {
+      task: async (ctx, task) => {
         await execa('git', ['fetch']);
         const updates = await execa.stdout('git', [
           'log',
@@ -57,13 +57,10 @@ const run = async () => {
           '--oneline',
         ]);
 
-        console.log(updates);
-        process.exit();
-
-        // if (branch !== 'master') {
-        //   ctx.enabled = false;
-        //   task.skip('Branch is not up-to-date, skipping publish');
-        // }
+        if (updates) {
+          ctx.enabled = false;
+          task.skip('Branch is not up-to-date, skipping publish');
+        }
       },
     },
     {

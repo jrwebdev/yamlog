@@ -1,0 +1,2 @@
+module: publish
+details: Check branch is master and up-to-date before publishing
