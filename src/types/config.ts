@@ -19,6 +19,9 @@ export default interface Config extends ChangelogConfig {
   commit?: {
     cmd: string;
   };
+  log?: {
+    module?: boolean;
+  },
   publish?: {
     bump?: false;
     commit?: false;

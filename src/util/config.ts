@@ -23,8 +23,9 @@ const getConfig = () => {
 
   config.unstable = userConfig.unstable;
   config.startVersion = userConfig.startVersion;
-  config.publish = userConfig.publish || {};
+  config.log = userConfig.log || {};
   config.commit = userConfig.commit || {};
+  config.publish = userConfig.publish || {};
 
   return config;
 };

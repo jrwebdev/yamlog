@@ -1,5 +1,8 @@
 import * as inquirer from 'inquirer';
 
+// TODO: Pass in
+import config from './config';
+
 const getDefaultType = (message: string) =>
   /(^| )fix( |$)/i.test(message) ? 'fix' : 'feature';
 
@@ -18,6 +21,7 @@ const prompt = ({ defaultMessage = '', defaultModule = '' } = {}) => {
     {
       type: 'input',
       name: 'module',
+      when: () => !config.log || config.log.module !== false,
       message: 'Which module does this change affect?',
       default: defaultModule || undefined,
     },
