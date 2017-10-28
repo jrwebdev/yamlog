@@ -119,12 +119,14 @@ const run = async () => {
   ];
 
   console.log();
-  new Listr(tasks)
+  new Listr(tasks, { renderer: process.env.CI ? 'verbose' : 'default' })
     .run()
     // TODO: Fix type
     .then((ctx: any) => {
       if (ctx.newVersion) {
         console.log(`\nv${ctx.newVersion} published successfully\n`);
+      } else {
+        console.log();
       }
       // console.log(
       //   `\n ${chalk.bold(
