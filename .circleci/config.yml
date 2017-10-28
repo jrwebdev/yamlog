@@ -1,9 +1,8 @@
 version: 2
 jobs:
-  build:
+  setup:
     docker:
       - image: circleci/node:6.11
-    working_directory: ~/repo
     steps:
       - checkout
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
@@ -18,6 +17,35 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
+  test:
+    docker:
+      - image: circleci/node:6.11
+    steps:
       - run: yarn test:all
+  build:
+    docker:
+      - image: circleci/node:6.11
+    steps:
       - run: yarn build
+  release:
+    docker:
+      - image: circleci/node:6.11
+    branches:
+      only: master
+    steps:
       - run: yarn release
+workflows:
+  version: 2
+  build:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
+      - build:
+          requires:
+            - setup
+      - release:
+          requires:
+            - test
+            - build
