@@ -58,7 +58,6 @@
     "@types/js-yaml": "^3.9.1",
     "@types/mock-fs": "^3.6.30",
     "@types/mockdate": "^2.0.0",
-    "@types/moment": "^2.13.0",
     "@types/node": "^8.0.41",
     "@types/pify": "^3.0.0",
     "@types/ramda": "^0.24.17",
