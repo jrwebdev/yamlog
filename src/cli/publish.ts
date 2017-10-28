@@ -13,11 +13,8 @@ interface Task {
   task: (ctx: any, task: any) => Promise<any>;
 }
 
-// TODO: How to prevent merges to master if release is in progress?
 // TODO: Rename to release to avoid conflict with npm publish/yarn publish?
-// TODO: Check branch is master?
 // TODO: Check no changes to be pulled?
-// TODO: Check node_modules are up-to-date?
 const run = async () => {
   const { publish: publishConfig = {} } = config;
 
@@ -29,24 +26,61 @@ const run = async () => {
   console.log();
   console.log('yamlog publish');
 
+  const enabled = (ctx: any) => ctx.enabled !== false;
+
   const tasks: Task[] = [
+    {
+      title: 'Checking branch is master',
+      enabled,
+      task: async (ctx, task) => {
+        const branch = await execa.stdout('git', [
+          'rev-parse',
+          '--abbrev-ref',
+          'HEAD',
+        ]);
+
+        // TODO: Allow branch to be customisable
+        if (branch !== 'master') {
+          ctx.enabled = false;
+          task.skip('Not on master, skipping publish');
+        }
+      },
+    },
+    {
+      title: 'Checking branch is up-to-date',
+      enabled,
+      task: async (_ctx, _task) => {
+        await execa('git', ['fetch']);
+        const updates = await execa.stdout('git', [
+          'log',
+          'HEAD..origin/master',
+          '--oneline',
+        ]);
+
+        console.log(updates);
+        process.exit();
+
+        // if (branch !== 'master') {
+        //   ctx.enabled = false;
+        //   task.skip('Branch is not up-to-date, skipping publish');
+        // }
+      },
+    },
     {
       // TODO: Option to disable bump
       title: 'Bumping version',
+      enabled,
       task: async (ctx, task) => {
         ctx.newVersion = await bumpVersion(config);
         if (!ctx.newVersion) {
+          ctx.enabled = false;
           task.skip('No new changes found, skipping publish');
         }
       },
     },
     {
       title: `Copying files to ${publishConfig.dir}/`,
-      enabled: ctx =>
-        !!ctx.newVersion &&
-        publishConfig.copyFiles !== false &&
-        copyFiles &&
-        !!copyFiles.length,
+      enabled,
       task: async () =>
         Promise.all(
           copyFiles.map(async file => {
@@ -59,7 +93,7 @@ const run = async () => {
     },
     {
       title: 'Publishing npm package',
-      enabled: ctx => !!ctx.newVersion,
+      enabled,
       task: () =>
         execa('npm', ['publish'], {
           cwd: publishConfig.dir || process.cwd(),
@@ -68,21 +102,20 @@ const run = async () => {
     {
       // TODO: Only needed if bump is performed
       title: 'Committing file changes',
-      enabled: ctx => !!ctx.newVersion && publishConfig.commit !== false,
+      enabled,
       task: ctx =>
-        // TODO: Add unpublished dir
         execa.shell(
           `git commit .yamlog package.json CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
         ),
     },
     {
       title: 'Tagging release',
-      enabled: ctx => !!ctx.newVersion && publishConfig.tag !== false,
+      enabled,
       task: ctx => execa.shell(`git tag v${ctx.newVersion}`),
     },
     {
       title: 'Pushing changes to repository',
-      enabled: ctx => !!ctx.newVersion && publishConfig.push !== false,
+      enabled,
       task: () =>
         execa.shell('git push origin HEAD:master && git push --tags origin'),
     },
