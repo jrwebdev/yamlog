@@ -1,3 +1,7 @@
+## 0.1.4 (2018-04-07)
+### Fixes
+* **publish** Fix error committing changelog
+
 ## 0.1.3 (2017-10-28)
 ### Features
 * **log** Allow module input question to be disabled
