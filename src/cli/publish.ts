@@ -102,7 +102,7 @@ const run = async () => {
       enabled,
       task: ctx =>
         execa.shell(
-          `git commit .yamlog package.json CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
+          `git add .yamlog package.json CHANGELOG.md && git commit .yamlog package.json CHANGELOG.md -m "v${ctx.newVersion}" --no-verify`
         ),
     },
     {
