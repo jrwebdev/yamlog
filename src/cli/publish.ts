@@ -5,6 +5,8 @@ import { existsSync, copy } from 'fs-extra';
 import config from '../util/config';
 import bumpVersion from '../lib/bump-version';
 
+import { isBranchUpToDate, getBranch } from '../util/git/';
+
 interface Task {
   title: string;
   // TODO: Fix types
@@ -33,12 +35,7 @@ const run = async () => {
       title: 'Checking branch is master',
       enabled,
       task: async (ctx, task) => {
-        const branch = await execa.stdout('git', [
-          'rev-parse',
-          '--abbrev-ref',
-          'HEAD',
-        ]);
-
+        const branch = await getBranch();
         // TODO: Allow branch to be customisable
         if (branch !== 'master') {
           ctx.enabled = false;
@@ -50,14 +47,8 @@ const run = async () => {
       title: 'Checking branch is up-to-date',
       enabled,
       task: async (ctx, task) => {
-        await execa('git', ['fetch']);
-        const updates = await execa.stdout('git', [
-          'log',
-          'HEAD..origin/master',
-          '--oneline',
-        ]);
-
-        if (updates) {
+        const branchUpToDate = isBranchUpToDate();
+        if (branchUpToDate) {
           ctx.enabled = false;
           task.skip('Branch is not up-to-date, skipping publish');
         }
